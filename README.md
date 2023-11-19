@@ -4,7 +4,6 @@ This is a task management app similar to trello. You are able to create boards a
 ![Logo of TaskWave](https://github.com/FarouqJalabi/TaskWave/blob/5ffaedb26d61b153837fe1ba19726212c602eb9c/public/Logo.png?raw=true)
 
 ## Features in progress
-
 ## Version 0
 - Login
 - Register 

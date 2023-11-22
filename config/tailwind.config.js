@@ -8,12 +8,12 @@ module.exports = {
     './app/views/**/*.{erb,haml,html,slim}'
   ],
   theme: {
-    colors: {
-      'comfortable': '#55EE5B',
-      'approaching': '#EEA855',
-      'urgent': '#EE5555',
-    },
     extend: {
+      colors: {
+        'comfortable': '#55EE5B',
+        'approaching': '#EEA855',
+        'urgent': '#EE5555',
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },

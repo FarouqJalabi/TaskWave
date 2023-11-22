@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_21_194238) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_180741) do
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.integer "creator_id", null: false
@@ -27,6 +27,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_21_194238) do
     t.index ["board_id"], name: "index_lists_on_board_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.date "due_date"
+    t.integer "list_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_tasks_on_list_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -41,4 +51,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_21_194238) do
 
   add_foreign_key "boards", "users", column: "creator_id"
   add_foreign_key "lists", "boards"
+  add_foreign_key "tasks", "lists"
 end

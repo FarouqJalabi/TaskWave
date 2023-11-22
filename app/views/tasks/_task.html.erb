@@ -1,3 +1,7 @@
-<section class="bg-white">
-  <%= task.name %>
+<section class="bg-white pt-2 px-2">
+
+  <!--  So tailwind will include classes -->
+  <!--  bg-green-comfortable bg-approaching bg-urgent -->
+  <div class="bg-<%= task.due_color %> h-4 w-24 rounded-full"></div>
+  <h1><%= task.name %></h1>
 </section>

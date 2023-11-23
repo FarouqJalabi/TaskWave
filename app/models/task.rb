@@ -2,13 +2,13 @@ class Task < ApplicationRecord
   belongs_to :list
   def due_color
     if due_date == nil
-      ''
+      'hidden'
     elsif due_date < 3.day.from_now
-      'urgent'
+      'bg-urgent'
     elsif due_date < 7.day.from_now
-      'approaching'
+      'bg-approaching'
       else
-        'comfortable'
+        'bg-comfortable'
     end
   end
 end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :boards do
     resources :lists do
+    # We render tasks inside boards, not inside lists
       resources :tasks
     end
   end

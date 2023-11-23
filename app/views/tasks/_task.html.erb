@@ -1,7 +1,7 @@
-<section class="bg-white pt-2 px-2 w-64">
+<section class="bg-white px-2 w-64 ">
 
   <!--  So tailwind will include classes -->
-  <!--  bg-green-comfortable bg-approaching bg-urgent -->
-  <div class="bg-<%= task.due_color %> h-4 w-24 rounded-full"></div>
+  <!--  bg-green-comfortable bg-approaching bg-urgent hidden -->
+  <div class="<%= task.due_color %> h-4 w-12 rounded-full mt-1.5 mb-[-5px] inline-block"></div>
   <h1><%= task.name %></h1>
 </section>

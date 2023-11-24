@@ -2,12 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+.task-over, .task-under {
+    position: relative;
 }
 
-*/
+.task-under::after {
+    content: "";
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    background: red;
+}
+.task-over::before {
+    content: "";
+    top:-5px;
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    background: red;
+}
+
+@layer components {
+
+}

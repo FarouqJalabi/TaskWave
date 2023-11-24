@@ -1,7 +1,9 @@
-<section class="bg-white px-2 w-64" data-drag-target="draggable" id="<%= task.id %>">
-
-  <!--  So tailwind will include classes -->
-  <!--  bg-green-comfortable bg-approaching bg-urgent hidden -->
+<section class="bg-white px-2 w-64" data-drag-target="draggable" id="task-<%= task.id %>"
+         <%# This is part of js not stimulus  %>
+         data-update-path="<%= board_list_task_path(@board.id, list.id, task) %>"
+>
+  <%# So tailwind will include classes %>
+  <%#  bg-green-comfortable bg-approaching bg-urgent hidden %>
   <div class="<%= task.due_color %> h-4 w-12 rounded-full mt-1.5 mb-[-5px] inline-block"></div>
   <h1><%= task.name %></h1>
 </section>

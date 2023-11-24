@@ -1,0 +1,16 @@
+<section>
+  <h1 class="text-2xl font-bold">Create board</h1>
+
+  <%= form_with model: @board do |form| %>
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+      <% @board.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+      <% end %>
+    </div>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</section>

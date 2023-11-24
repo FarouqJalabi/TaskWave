@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_180741) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_24_195054) do
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.integer "creator_id", null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_180741) do
     t.integer "list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "place", default: 0, null: false
     t.index ["list_id"], name: "index_tasks_on_list_id"
   end
 

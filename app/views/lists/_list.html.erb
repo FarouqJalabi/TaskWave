@@ -1,4 +1,4 @@
-<section class="bg-gray-300 p-2 rounded list" data-controller="drag" id="list-<%= list.id %>">
+<section class="bg-gray-300 p-2 rounded gap-2 list flex flex-col" data-controller="drag" id="list-<%= list.id %>">
   <h1 class="font-bold text-xl"><%= list.name %></h1>
 
   <%= render list.tasks, list: list %>

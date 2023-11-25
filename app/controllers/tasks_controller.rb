@@ -9,11 +9,13 @@ class TasksController < ApplicationController
   end
 
   def update
-    puts "Yes sir 1234"
     @task = Task.find(params[:id])
-    @task.update task_params
-    @task.save
-    puts "Yes sir 1234", @task
+    if @task.place != task_params[:place].to_i or @task.list_id != task_params[:list_id].to_i
+      puts "Actual update"
+      shift_tasks(List.find[id:task_params[:list_id]] ,@task.list, task_params[:place].to_i)
+    end
+    # @task.update task_params
+    # @task.save
     # For our stimulus
     respond_to do |format|
       format.js
@@ -21,8 +23,16 @@ class TasksController < ApplicationController
   end
 
   private
+  def shift_old_list(list, place)
+    # TODO run through old task and update
+  end
+  def shift_new_task(old_list, new_list, new_place)
+    if new_list.tasks.where(place: new_place)
+    # TODO Task.where(place: range).update_all('place = place + ?', direction)
+    end
+  end
 
   def task_params
-    params.require(:task).permit(:name, :list_id)
+    params.require(:task).permit(:name, :list_id, :place)
   end
 end

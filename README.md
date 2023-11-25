@@ -9,9 +9,9 @@ This is a task management app similar to trello. You are able to create boards a
 - Login
 - Register
 - New board
-- Change board background
 - New task list
 - New task
+- Task dragging
 - Task due date
 - Private and public boards
 
@@ -22,11 +22,12 @@ This is a task management app similar to trello. You are able to create boards a
 - Task date reminder on mail
 - Board background change
 
-### Version 2
+### Version 2 (maybe)
+- Profile to custom image
+- Board background to custom image
+
+### Version 3 (maybe)
 - Ability to change default board privileges
 - User specific privileges
 - Soft deletion of boards
  
-### Version 3
-- Profile to custom image
-- Board background to custom image

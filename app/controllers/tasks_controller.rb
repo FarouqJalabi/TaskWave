@@ -11,25 +11,26 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    task_order =  params[:tasksOrder].split(",")
-    old_task_order =  params[:oldTasksOrder].split(",")
+    if @task.place != task_params[:place].to_i or  @task.list_id != task_params[:list_id].to_i
 
-    task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
-    old_task_places = Hash[old_task_order.map.with_index { |id, index| [id.to_i, index] }]
+      task_order =  params[:tasksOrder].split(",")
+      task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
+      if @task.list_id != task_params[:list_id].to_i
+        old_task_order =  params[:oldTasksOrder].split(",")
+        old_task_places = Hash[old_task_order.map.with_index { |id, index| [id.to_i, index] }]
+        task_places = task_places.merge(old_task_places)
 
-    combined_task_places = task_places.merge(old_task_places)
-    puts combined_task_places
+        task_order = task_order.concat(old_task_order)
 
-    tasks = Task.where(id: task_order.concat(old_task_order))
+      end
 
-    # Bulk update using activeRecord
-    tasks.each do |task|
-      task.place = combined_task_places[task.id]
+
+      tasks = Task.where(id: task_order)
+      update_places(tasks, task_places)
     end
 
-    Task.transaction do
-      tasks.each(&:save!)
-    end
+
+
 
     @task.update task_params
     @task.save
@@ -44,4 +45,15 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :list_id)
   end
+    def update_places(tasks, combined_task_places)
+
+      # Bulk update using activeRecord
+      tasks.each do |task|
+        task.place = combined_task_places[task.id]
+      end
+
+      Task.transaction do
+        tasks.each(&:save!)
+      end
+    end
 end

@@ -5,7 +5,7 @@
          data-update-path="<%= board_list_task_path(@board.id, list.id, task) %>"
 >
   <%# So tailwind will include classes %>
-  <%#  bg-green-comfortable bg-approaching bg-urgent hidden %>
-  <div class="<%= task.due_color %> h-4 w-12 rounded-full mt-1.5 mb-[-5px] inline-block"></div>
+  <%#  bg-comfortable bg-approaching bg-urgent hidden %>
+  <div class="<%= task.due_color %> h-5 px-2 rounded-full mt-1.5 mb-[-5px] inline-block text-sm"><%= task.due_date %> </div>
   <h1><%= task.name %></h1>
 </section>

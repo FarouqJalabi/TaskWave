@@ -1,6 +1,14 @@
 <section class="bg-gray-300 p-2 rounded gap-2 list flex flex-col" data-controller="drag" id="list-<%= list.id %>"
   data-action="drop->drag#drop dragover->drag#allowDrop">
-  <h1 class="font-bold text-xl"><%= list.name %></h1>
+  <div  data-controller="editable">
+  <h1 class="font-bold text-xl"
+      data-editable-target="name" data-action="dblclick->editable#dblclick"
+  ><%= list.name %></h1>
+
+  <%= form_with model: list, url: board_list_path(@board.id, list.id), html:{hidden:true} do |form|  %>
+    <%= form.text_field :name, class: "p-0 font-bold text-xl",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+  <% end %>
+  </div>
 
   <%= render list.tasks.sort_by(&:place), list: list %>
   <!-- We are still in board#show. url has to be specified, auto one is bad -->

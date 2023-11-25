@@ -19,9 +19,12 @@ class BoardsController < ApplicationController
       elsif
       render :new, status: :unprocessable_entity
       end
-
   end
-
+  def update
+    @board = Board.find(params[:id])
+    @board.update(board_params)
+    redirect_to @board
+  end
   private
   def set_board
     @board = Board.find(params[:id])

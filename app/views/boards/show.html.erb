@@ -1,5 +1,13 @@
 <section>
-  <h1 class="text-2xl font-bold"><%= @board.name %></h1>
+  <div  data-controller="editable">
+    <h1 class="text-2xl font-bold"
+        data-action="dblclick->editable#dblclick"
+    ><%= @board.name %></h1>
+
+    <%= form_with model: @board, html:{hidden:true} do |form|  %>
+      <%= form.text_field :name, class: "p-0 font-bold text-2xl",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+    <% end %>
+  </div>
 
   <section class="flex gap-5">
     <%= render @board.lists %>

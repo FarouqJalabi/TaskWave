@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    if @task.place != task_params[:place].to_i or  @task.list_id != task_params[:list_id].to_i
+    if (@task.place != task_params[:place].to_i or  @task.list_id != task_params[:list_id].to_i) and params.has_key?(:taskOrder) and params.has_key?(:oldTasksOrder)
       task_order =  params[:tasksOrder].split(",")
       task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
       if @task.list_id != task_params[:list_id].to_i

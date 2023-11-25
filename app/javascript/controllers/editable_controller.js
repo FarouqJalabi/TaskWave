@@ -21,5 +21,6 @@ export default class extends Controller {
   focusout(ev) {
     // Assuming input is focusout
     this.formTarget.submit();
+    // console.log("EDIT!");
   }
 }

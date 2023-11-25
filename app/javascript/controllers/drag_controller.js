@@ -14,7 +14,7 @@ export default class extends Controller {
 
     element.addEventListener("dragover", this.dragover);
     element.addEventListener("dragleave", this.dragleave);
-    element.addEventListener("drop", this.drop);
+    // element.addEventListener("drop", this.drop);
   }
 
   dragstart(e) {
@@ -47,9 +47,10 @@ export default class extends Controller {
 
     const data = e.dataTransfer.getData("text/plain");
     const draggedTask = document.getElementById(data);
-    const list = e.target.closest('[id*="list"]');
+    const oldList = draggedTask.parentElement;
+    const list = e.target.closest('[id*="list-"]');
     const task =
-      e.target.closest('[id*="task"]') ||
+      e.target.closest('[id*="task-"]') ||
       list.children[list.children.length - 2];
 
     const nextSibling = task.nextSibling;
@@ -60,26 +61,27 @@ export default class extends Controller {
     } else {
       list.appendChild(draggedTask);
     }
-    updateRails(
-      draggedTask,
-      list.id.split("-")[1],
-      taskPlace(list, draggedTask) - 1
-    );
+
+    updateRails(draggedTask, list.id.split("-")[1], list, oldList);
   }
 }
 // For external functions
-function updateRails(taskElement, listId, place) {
+function updateRails(taskElement, listId, list, oldList) {
+  let tasks = list.querySelectorAll('[id*="task-"]');
+  let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
+  let oldTasks = oldList.querySelectorAll('[id*="task-"]');
+  let oldTasksIds = Array.from(oldTasks, (e) => e.id.split("-")[1]);
+
   const updatePath = taskElement.dataset.updatePath;
-  console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
-  formData.append("task[place]", place);
+  formData.append("tasksOrder", tasksIds.join(","));
+  formData.append("oldTasksOrder", oldTasksIds.join(","));
   fetch(updatePath, {
     body: formData,
     method: "PATCH",
     dataType: "script",
     credentials: "include",
-
     headers: {
       "X-Requested-With": "XMLHttpRequest",
       "X-CSRF-Token": document.head.querySelector("meta[name=csrf-token]")
@@ -87,7 +89,7 @@ function updateRails(taskElement, listId, place) {
     },
   }).then(function (response) {
     if (response.status !== 204) {
-      console.log("Error:");
+      console.log("Error task update:");
       console.log(response);
     }
   });

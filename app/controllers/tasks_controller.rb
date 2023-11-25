@@ -10,12 +10,29 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    if @task.place != task_params[:place].to_i or @task.list_id != task_params[:list_id].to_i
-      puts "Actual update"
-      shift_tasks(List.find[id:task_params[:list_id]] ,@task.list, task_params[:place].to_i)
+
+    task_order =  params[:tasksOrder].split(",")
+    old_task_order =  params[:oldTasksOrder].split(",")
+
+    task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
+    old_task_places = Hash[old_task_order.map.with_index { |id, index| [id.to_i, index] }]
+
+    combined_task_places = task_places.merge(old_task_places)
+    puts combined_task_places
+
+    tasks = Task.where(id: task_order.concat(old_task_order))
+
+    # Bulk update using activeRecord
+    tasks.each do |task|
+      task.place = combined_task_places[task.id]
     end
-    # @task.update task_params
-    # @task.save
+
+    Task.transaction do
+      tasks.each(&:save!)
+    end
+
+    @task.update task_params
+    @task.save
     # For our stimulus
     respond_to do |format|
       format.js
@@ -23,16 +40,8 @@ class TasksController < ApplicationController
   end
 
   private
-  def shift_old_list(list, place)
-    # TODO run through old task and update
-  end
-  def shift_new_task(old_list, new_list, new_place)
-    if new_list.tasks.where(place: new_place)
-    # TODO Task.where(place: range).update_all('place = place + ?', direction)
-    end
-  end
 
   def task_params
-    params.require(:task).permit(:name, :list_id, :place)
+    params.require(:task).permit(:name, :list_id)
   end
 end

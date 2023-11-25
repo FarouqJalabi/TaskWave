@@ -22,7 +22,9 @@
     position: absolute;
     background: red;
 }
-
+.dragging {
+    background:blue;
+}
 @layer components {
 
 }

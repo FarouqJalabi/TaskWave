@@ -11,11 +11,15 @@ export default class extends Controller {
   draggableTargetConnected(element) {
     element.draggable = true;
     element.addEventListener("dragstart", this.dragstart);
+
     element.addEventListener("dragover", this.dragover);
     element.addEventListener("dragleave", this.dragleave);
     element.addEventListener("drop", this.drop);
   }
 
+  dragstart(e) {
+    e.dataTransfer.setData("text/plain", e.target.id);
+  }
   dragover(e) {
     const list = e.target.closest('[id*="list"]');
     let task =
@@ -26,16 +30,13 @@ export default class extends Controller {
     task.classList.add("task-" + position);
     taskPlace(list, task);
   }
+
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
     let task =
       e.target.closest('[id*="task"]') || list.children[list.children - 2];
     task.classList.remove("task-over");
     task.classList.remove("task-under");
-  }
-
-  dragstart(e) {
-    e.dataTransfer.setData("text/plain", e.target.id);
   }
 
   allowDrop(e) {
@@ -48,18 +49,18 @@ export default class extends Controller {
     const data = e.dataTransfer.getData("text/plain");
     const draggedTask = document.getElementById(data);
     const list = e.target.closest('[id*="list"]');
-    // Default to last
     const task =
-      e.target.closest('[id*="task"]') || list.children[list.children - 2];
+      e.target.closest('[id*="task"]') ||
+      list.children[list.children.length - 2];
 
-    let top = task.getBoundingClientRect().top;
-    let relativeY = e.clientY - top - task.offsetHeight / 2;
-    let dragOverHalf = relativeY > 0;
-    let indexWithinParent = Array.from(list.children).indexOf(task);
-
-    // console.log(indexWithinParent);
-    //
-    // list.appendChild(draggedTask);
+    const nextSibling = task.nextSibling;
+    if (dragOverHalf(list, task, e.clientY)) {
+      list.insertBefore(draggedTask, task);
+    } else if (nextSibling) {
+      list.insertBefore(draggedTask, nextSibling);
+    } else {
+      list.appendChild(draggedTask);
+    }
     // updateRails(draggedTask, list.id.split("-")[1]);
   }
 }

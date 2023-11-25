@@ -12,7 +12,6 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.place != task_params[:place].to_i or  @task.list_id != task_params[:list_id].to_i
-
       task_order =  params[:tasksOrder].split(",")
       task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
       if @task.list_id != task_params[:list_id].to_i
@@ -21,7 +20,6 @@ class TasksController < ApplicationController
         task_places = task_places.merge(old_task_places)
 
         task_order = task_order.concat(old_task_order)
-
       end
 
 
@@ -36,7 +34,12 @@ class TasksController < ApplicationController
     @task.save
     # For our stimulus
     respond_to do |format|
-      format.js
+      format.html do
+        redirect_to board_path(@task.list.board)
+      end
+      format.json do
+        render json: {status: 'success'}
+      end
     end
   end
 

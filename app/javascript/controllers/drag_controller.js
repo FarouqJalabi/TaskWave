@@ -28,7 +28,6 @@ export default class extends Controller {
     task.classList.remove("task-over");
     task.classList.remove("task-under");
     task.classList.add("task-" + position);
-    taskPlace(list, task);
   }
 
   dragleave(e) {
@@ -61,15 +60,20 @@ export default class extends Controller {
     } else {
       list.appendChild(draggedTask);
     }
-    // updateRails(draggedTask, list.id.split("-")[1]);
+    updateRails(
+      draggedTask,
+      list.id.split("-")[1],
+      taskPlace(list, draggedTask) - 1
+    );
   }
 }
 // For external functions
-function updateRails(taskElement, listId) {
+function updateRails(taskElement, listId, place) {
   const updatePath = taskElement.dataset.updatePath;
   console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
+  formData.append("task[place]", place);
   fetch(updatePath, {
     body: formData,
     method: "PATCH",

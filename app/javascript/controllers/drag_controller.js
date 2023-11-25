@@ -1,22 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["draggable"];
-
-  connect() {
-    this.element.addEventListener("drop", this.drop);
-    this.element.addEventListener("dragover", this.allowDrop);
-  }
-
-  draggableTargetConnected(element) {
-    element.draggable = true;
-    element.addEventListener("dragstart", this.dragstart);
-
-    element.addEventListener("dragover", this.dragover);
-    element.addEventListener("dragleave", this.dragleave);
-    // element.addEventListener("drop", this.drop);
-  }
-
   dragstart(e) {
     e.dataTransfer.setData("text/plain", e.target.id);
   }

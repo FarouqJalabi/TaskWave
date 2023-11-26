@@ -11,12 +11,14 @@
 
   <section class="flex gap-5">
     <%= render @board.lists %>
-    <%= form_with model: [@board, @board.lists.build] do |form| %>
-      <section class="bg-gray-300 p-2 rounded h-min">
-        <%= form.submit "New list +" %>
-      </section>
-    <% end %>
 
+    <div data-controller="editable" class="bg-gray-300 p-2 rounded h-min">
+
+      <button data-action="click->editable#dblclick">New List +</button>
+        <%= form_with model: [@board, @board.lists.build], html:{hidden:true, "data-action":"submit->editable#submit"}  do |form| %>
+        <%= form.text_field :name, class: "p-0 font-bold text-xl", "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+    <% end %>
+    </div>
 
   </section>
 

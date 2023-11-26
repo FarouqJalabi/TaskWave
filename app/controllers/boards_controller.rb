@@ -17,7 +17,7 @@ class BoardsController < ApplicationController
       if @board.save
         redirect_to board_path(@board)
       elsif
-      render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_entity
       end
   end
   def update

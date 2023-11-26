@@ -28,8 +28,6 @@ class TasksController < ApplicationController
       # If not stimulus must be rails form
       redirect_to board_path(@task.list.board)
     end
-    # For our stimulus
-
   end
 
   private

@@ -8,7 +8,6 @@
   <%= form_with model: list, url: board_list_path(@board.id, list.id), html:{hidden:true} do |form|  %>
     <%= form.text_field :name, class: "p-0 font-bold text-xl",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
   <% end %>
-
   </div>
 
   <%= render list.tasks.sort_by(&:place), list: list %>
@@ -16,10 +15,10 @@
   <div data-controller="editable">
 
     <button data-action="click->editable#dblclick">New Task +</button>
-    <%= form_with model: [list, list.tasks.build], url: board_list_tasks_path(@board, list), html:{hidden:true}  do |form| %>
+    <%= form_with model: [list, list.tasks.build], url: board_list_tasks_path(@board, list), html:{hidden:true, "data-action":"submit->editable#submit"}  do |form| %>
       <section class="bg-gray-300 p-2 rounded h-min">
         <%= form.hidden_field :list_id, value: list.id %>
-        <%= form.text_field :name, class: "p-0", "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+        <%= form.text_field :name, class: "p-0", "data-editable-target":"input", "data-action":"focusout->editable#focusout " %>
       </section>
     <% end %>
   </div>

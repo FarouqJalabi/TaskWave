@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     // Assume only one input target
     this.formTarget = this.inputTarget.closest("form");
+    this.formSubmitted = false;
   }
   dblclick(ev) {
     console.log("Double click");
@@ -20,7 +21,15 @@ export default class extends Controller {
   }
   focusout(ev) {
     // Assuming input is focusout
-    this.formTarget.submit();
-    // console.log("EDIT!");
+    if (!this.formSubmitted) {
+      this.formTarget.submit();
+      this.formSubmitted = true;
+    }
+  }
+  submit(ev) {
+    if (this.formSubmitted) {
+      ev.preventDefault();
+    }
+    this.formSubmitted = true;
   }
 }

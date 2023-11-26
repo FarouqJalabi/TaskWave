@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_24_195054) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_26_181227) do
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.integer "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public", default: true
     t.index ["creator_id"], name: "index_boards_on_creator_id"
   end
 

@@ -1,5 +1,7 @@
 <section class="flex flex-col ">
-  <h1 class="text-2xl font-bold">Boards</h1>
-  <%= render @boards %>
+  <h1 class="text-2xl font-bold">Your boards</h1>
+  <%= render @user_boards %>
   <%= link_to "New board", new_board_path, class: "underline text-blue-600"  %>
+  <h1 class="text-2xl font-bold">Other boards</h1>
+  <%= render @other_boards %>
 </section>

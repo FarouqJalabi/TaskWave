@@ -3,7 +3,8 @@ class BoardsController < ApplicationController
   before_action :set_board, only: [:show]
   before_action :authenticate_user!, only: [:create, :new]
   def index
-    @boards = Board.all
+    @user_boards = Board.where(creator_id:current_user.id)
+    @other_boards = Board.where(public: true).where.not(creator_id:current_user.id)
   end
   def show
   end
@@ -30,6 +31,6 @@ class BoardsController < ApplicationController
     @board = Board.find(params[:id])
   end
   def board_params
-    params.require(:board).permit(:name)
+    params.require(:board).permit(:name, :public)
   end
 end

@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  validates_presence_of :name
   belongs_to :list
   def due_color
     if due_date == nil

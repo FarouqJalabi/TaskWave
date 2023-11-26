@@ -3,12 +3,23 @@
 
   <%= form_with model: @board do |form| %>
     <div>
+
+      <%= form.label "Visibility" %>
+      <%= form.select :public, [['Public', true], ['Private', false]] %>
+
+      <% @board.errors.full_messages_for(:public).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
       <%= form.label :name %>
       <%= form.text_field :name %>
       <% @board.errors.full_messages_for(:name).each do |message| %>
       <div><%= message %></div>
       <% end %>
     </div>
+
     <div>
       <%= form.submit %>
     </div>

@@ -4,7 +4,8 @@ class TasksController < ApplicationController
     @board = Board.find(params[:board_id])
     @list = @board.lists.find(params[:list_id]) # ? Faster search using board
     last_task = @list.tasks.order(:place)[-1] # * "Preferable in 99% of cases"
-    @task = @list.tasks.create(name: task_params[:name], place: last_task&.place + 1 || 0)
+
+    @task = @list.tasks.create(name: task_params[:name], place: last_task&.place.to_i + 1)
     redirect_to board_path(@board)
   end
 

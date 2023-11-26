@@ -10,7 +10,7 @@
   <%#  bg-comfortable bg-approaching bg-urgent hidden text-white %>
   <div class="<%= task.due_color %> h-5 px-2 rounded-full mt-1.5 mb-[-5px] inline-block text-sm"><%= task.due_date %> </div>
   <h1 data-action="dblclick->editable#dblclick"
-  ><%= task.name %></h1>
+  ><%= task.name %> <%= task.place %></h1>
     <%= form_with model: task, url: board_list_task_path(@board.id, list.id, task.id), html:{hidden:true} do |form|  %>
     <%= form.hidden_field :list_id, value: list.id %>
     <%= form.text_field :name, class: "p-0",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>

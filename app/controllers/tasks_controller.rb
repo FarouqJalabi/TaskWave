@@ -10,37 +10,26 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-
-    if (@task.place != task_params[:place].to_i or  @task.list_id != task_params[:list_id].to_i) and params.has_key?(:taskOrder) and params.has_key?(:oldTasksOrder)
-      task_order =  params[:tasksOrder].split(",")
-      task_places = Hash[task_order.map.with_index { |id, index| [id.to_i, index] }]
-      if @task.list_id != task_params[:list_id].to_i
-        old_task_order =  params[:oldTasksOrder].split(",")
-        old_task_places = Hash[old_task_order.map.with_index { |id, index| [id.to_i, index] }]
-        task_places = task_places.merge(old_task_places)
-
-        task_order = task_order.concat(old_task_order)
-      end
-
-
-      tasks = Task.where(id: task_order)
-      update_places(tasks, task_places)
-    end
-
-
-
-
+    old_task_place = @task.place
+    old_list_id = @task.list_id
     @task.update task_params
     @task.save
-    # For our stimulus
-    respond_to do |format|
-      format.html do
-        redirect_to board_path(@task.list.board)
+    if old_task_place != @task.place or old_list_id != @task.list_id
+      # Only stimulus updates place
+      # Actually needs updating
+      task_order =  params[:tasksOrder].split(",")
+      conditions = task_order.map { |id| "WHEN #{id} THEN #{task_order.index(id)}" }.join(' ')
+      Task.where(id: task_order).update_all(["place = CASE id #{conditions} END"])
+
+      respond_to do |format|
+        format.json
       end
-      format.json do
-        render json: {status: 'success'}
-      end
+    elsif
+      # If not stimulus must be rails form
+      redirect_to board_path(@task.list.board)
     end
+    # For our stimulus
+
   end
 
   private
@@ -48,15 +37,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :list_id)
   end
-    def update_places(tasks, combined_task_places)
-
-      # Bulk update using activeRecord
-      tasks.each do |task|
-        task.place = combined_task_places[task.id]
-      end
-
-      Task.transaction do
-        tasks.each(&:save!)
-      end
-    end
 end

@@ -35,7 +35,6 @@ export default class extends Controller {
 
     const data = e.dataTransfer.getData("text/plain");
     const draggedTask = document.getElementById(data);
-    const oldList = draggedTask.parentElement;
     const list = e.target.closest('[id*="list-"]');
     const task =
       e.target.closest('[id*="task-"]') ||
@@ -53,21 +52,19 @@ export default class extends Controller {
       list.appendChild(draggedTask);
     }
 
-    updateRails(draggedTask, list.id.split("-")[1], list, oldList);
+    updateRails(draggedTask, list.id.split("-")[1], list);
   }
 }
 // For external functions
-function updateRails(taskElement, listId, list, oldList) {
+function updateRails(taskElement, listId, list) {
   let tasks = list.querySelectorAll('[id*="task-"]');
   let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
-  let oldTasks = oldList.querySelectorAll('[id*="task-"]');
-  let oldTasksIds = Array.from(oldTasks, (e) => e.id.split("-")[1]);
 
   const updatePath = taskElement.dataset.updatePath;
+  console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
   formData.append("tasksOrder", tasksIds.join(","));
-  formData.append("oldTasksOrder", oldTasksIds.join(","));
   fetch(updatePath, {
     body: formData,
     method: "PATCH",

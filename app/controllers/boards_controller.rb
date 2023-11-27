@@ -3,8 +3,9 @@ class BoardsController < ApplicationController
   before_action :set_board, only: [:show]
   before_action :authenticate_user!, only: [:create, :new]
   def index
-    @user_boards = Board.where(creator_id:current_user.id)
-    @other_boards = Board.where(public: true).where.not(creator_id:current_user.id)
+
+    @user_boards = Board.where(creator_id:current_user)
+    @other_boards = Board.where(public: true).where.not(creator_id:current_user)
   end
   def show
   end

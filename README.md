@@ -12,22 +12,20 @@ This is a task management app similar to trello. You are able to create boards a
 - New task list
 - New task
 - Task dragging
+- Task ordering
 - Task due date
 - Private and public boards
+- Delete task
+- Soft deletion of boards
 
 ### Version 1
 - Confirm email
 - Add users to board
+- Public boards only visible not changable
 - Assign people to task
 - Task date reminder on mail
 - Board background change
 
-### Version 2 (maybe)
+### Version 2
 - Profile to custom image
 - Board background to custom image
-
-### Version 3 (maybe)
-- Ability to change default board privileges
-- User specific privileges
-- Soft deletion of boards
- 

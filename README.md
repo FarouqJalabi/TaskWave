@@ -8,9 +8,9 @@ This is a task management app similar to trello. You are able to create boards a
 ### Version 0
 - Login
 - Register
-- New board
-- New task list
-- New task
+- New/edit board
+- New/edit task list
+- New/edit task
 - Task dragging
 - Task ordering
 - Task due date

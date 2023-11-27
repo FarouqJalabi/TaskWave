@@ -3,7 +3,6 @@
          data-action="dragstart->drag#dragstart dragover->drag#dragover dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag"
          <%# This is part of js not stimulus  %>
          data-update-path="<%= board_list_task_path(@board.id, list.id, task) %>"
-
          data-controller="editable"
 >
   <%# So tailwind will include classes %>

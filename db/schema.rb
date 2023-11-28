@@ -11,9 +11,12 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2023_11_26_181227) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "boards", force: :cascade do |t|
     t.string "name"
-    t.integer "creator_id", null: false
+    t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "public", default: true
@@ -22,7 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_181227) do
 
   create_table "lists", force: :cascade do |t|
     t.string "name"
-    t.integer "board_id", null: false
+    t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_lists_on_board_id"
@@ -32,7 +35,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_181227) do
     t.string "name"
     t.text "description"
     t.date "due_date"
-    t.integer "list_id", null: false
+    t.bigint "list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "place", default: 0, null: false

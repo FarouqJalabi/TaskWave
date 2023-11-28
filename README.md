@@ -2,7 +2,9 @@
 This is a task management app similar to trello. You are able to create boards add new tasks with due dates and even assign a person to a task.
 
 ![Logo of TaskWave](https://github.com/FarouqJalabi/TaskWave/blob/5ffaedb26d61b153837fe1ba19726212c602eb9c/public/Logo.png?raw=true)
+Visit site: [TaskWave](https://taskwave-95876f6bfce4.herokuapp.com) * PS this is not near finished product
 
+[Figma file](https://www.figma.com/file/hqOpRf1V8wm1M53AnW27gy/TaskWave?type=design&node-id=0-1&mode=design&t=18Czr5AlmXNK4Qcb-0)
 ## Features in progress
 
 ### Version 0

@@ -19,9 +19,11 @@
       <div><%= message %></div>
       <% end %>
     </div>
-<!--    <div>-->
-      <%#= Board::background_urls %>
-<!--    </div>-->
+    <div>
+      <%= form.select :background_url, options_for_select(
+        Board::background_urls.map { |k,v| [v, k] }) %>
+    </div>
+
 
     <div>
       <%= form.submit %>

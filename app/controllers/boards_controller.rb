@@ -32,6 +32,6 @@ class BoardsController < ApplicationController
     @board = Board.find(params[:id])
   end
   def board_params
-    params.require(:board).permit(:name, :public)
+    params.require(:board).permit(:name, :public, :background_url)
   end
 end

@@ -1,4 +1,9 @@
 <section>
+<!-- ? Bad to copy paste same main style? -->
+  <div class="w-screen h-screen fixed z-[-10] left-0 top-0"
+       style="background: url('<%= @board.background_url %>'); background-size: cover; background-position:center;"
+  ></div>
+
   <div  data-controller="editable">
     <h1 class="text-2xl font-bold"
         data-action="dblclick->editable#dblclick"

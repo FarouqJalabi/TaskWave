@@ -16,12 +16,12 @@ Visit site: [TaskWave](https://taskwave-95876f6bfce4.herokuapp.com) * PS this is
 - New/edit task
 - Task dragging
 - Task ordering
-- Task due date
 - Private and public boards
 - Delete task
 - Soft deletion of boards
 
 ### Version 1
+- Task due date
 - Confirm email
 - Add users to board
 - Public boards only visible not changable

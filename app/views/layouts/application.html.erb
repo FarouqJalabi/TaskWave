@@ -9,10 +9,25 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%#= javascript_include_tag 'application' %>
+
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <nav class="bg-dark w-full p-5 flex items-center">
+      <a href="<%= root_path %>">
+      <%= image_tag("Logo.svg", alt:"Logo of task-wave", class: "w-36 md:w-48") %>
+      </a>
+
+      <div class="text-white ml-auto">
+      <% if user_signed_in? %>
+          <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
+      <% else %>
+          <%= link_to "Login", new_user_session_path %>
+      <% end %>
+      </div>
+    </nav>
+    <main class="px-5 mt-4">
       <%= yield %>
     </main>
   </body>

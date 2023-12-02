@@ -41,10 +41,11 @@ export default class extends Controller {
     const task =
       e.target.closest('[id*="task-"]') ||
       list.children[list.children.length - 1];
+    const noTasks = task === list.children[list.children.length - 1];
 
     task.classList.remove("task-over", "task-under");
     const nextSibling = task.nextSibling;
-    if (dragOverHalf(list, task, e.clientY)) {
+    if (dragOverHalf(list, task, e.clientY) || noTasks) {
       list.insertBefore(draggedTask, task);
     } else if (nextSibling) {
       list.insertBefore(draggedTask, nextSibling);

@@ -8,6 +8,7 @@
 }
 
 .task-under::after {
+    pointer-events: none;
     content: "";
 
     left: 50%;
@@ -20,6 +21,7 @@
     background: grey;
 }
 .task-over::before {
+    pointer-events: none;
     content: "";
 
     top:-7px;

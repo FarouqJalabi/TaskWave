@@ -22,6 +22,7 @@ export default class extends Controller {
     let task =
       e.target.closest('[id*="task"]') ||
       list.children[list.children.length - 1];
+    list.children[list.children.length - 1].classList.remove("task-over");
     task.classList.remove("task-over", "task-under");
   }
 
@@ -29,7 +30,15 @@ export default class extends Controller {
     e.preventDefault();
     const list = e.target.closest('[id*="list"]');
     let last_child = list.children[list.children.length - 1];
-    last_child.classList.add("task-over");
+    const hasClass =
+      list.querySelector(
+        ':is([class*="task-over"], [class*="task-under"]):is([id*="task"])'
+      ) !== null;
+    if (hasClass) {
+      last_child.classList.remove("task-over");
+    } else {
+      last_child.classList.add("task-over");
+    }
   }
 
   drop(e) {
@@ -44,6 +53,7 @@ export default class extends Controller {
     const noTasks = task === list.children[list.children.length - 1];
 
     task.classList.remove("task-over", "task-under");
+    list.children[list.children.length - 1].classList.remove("task-over");
     const nextSibling = task.nextSibling;
     if (dragOverHalf(list, task, e.clientY) || noTasks) {
       list.insertBefore(draggedTask, task);

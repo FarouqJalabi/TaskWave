@@ -9,22 +9,30 @@
 
 .task-under::after {
     content: "";
-    width: 5px;
+
+    left: 50%;
+    transform: translate(-50%,2px);
+    width: 90%;
     height: 5px;
+
     position: absolute;
-    background: red;
+    border-radius: 50px;
+    background: grey;
 }
 .task-over::before {
     content: "";
-    top:-5px;
-    width: 5px;
+
+    top:-7px;
+    left: 50%;
+    transform: translate(-50%,0);
+    width: 90%;
     height: 5px;
+
+    border-radius: 50px;
     position: absolute;
-    background: red;
+    background: grey;
 }
-.dragging {
-    background:blue;
-}
+
 @layer components {
 
 }

@@ -1,5 +1,5 @@
 <section class="bg-gray-300 p-2 rounded gap-2 list flex flex-col min-w-[272px] h-min" data-controller="drag" id="list-<%= list.id %>"
-  data-action="drop->drag#drop dragover->drag#allowDrop">
+  data-action="drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave">
   <div  data-controller="editable">
   <h1 class="font-bold text-xl"
       data-action="dblclick->editable#dblclick"

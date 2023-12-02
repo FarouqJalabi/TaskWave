@@ -6,11 +6,9 @@ export default class extends Controller {
   }
   dragover(e) {
     const list = e.target.closest('[id*="list"]');
-    let task =
-      e.target.closest('[id*="task"]') || list.children[list.children - 2];
+    let task = e.target.closest('[id*="task"]');
     let position = dragOverHalf(list, task, e.clientY) ? "over" : "under";
-    task.classList.remove("task-over");
-    task.classList.remove("task-under");
+    task.classList.remove("task-over", "task-under");
     task.classList.add("task-" + position);
   }
   drag(e) {
@@ -22,12 +20,16 @@ export default class extends Controller {
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
     let task =
-      e.target.closest('[id*="task"]') || list.children[list.children - 2];
+      e.target.closest('[id*="task"]') ||
+      list.children[list.children.length - 1];
     task.classList.remove("task-over", "task-under");
   }
 
   allowDrop(e) {
     e.preventDefault();
+    const list = e.target.closest('[id*="list"]');
+    let last_child = list.children[list.children.length - 1];
+    last_child.classList.add("task-over");
   }
 
   drop(e) {
@@ -38,10 +40,8 @@ export default class extends Controller {
     const list = e.target.closest('[id*="list-"]');
     const task =
       e.target.closest('[id*="task-"]') ||
-      list.children[list.children.length - 2];
+      list.children[list.children.length - 1];
 
-    // let tasks = document.querySelectorAll('[id*="list"]');
-    // tasks.forEach((el) => el.classList.remove("task-over", "task-under"));
     task.classList.remove("task-over", "task-under");
     const nextSibling = task.nextSibling;
     if (dragOverHalf(list, task, e.clientY)) {
@@ -61,7 +61,6 @@ function updateRails(taskElement, listId, list) {
   let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
 
   const updatePath = taskElement.dataset.updatePath;
-  console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
   formData.append("tasksOrder", tasksIds.join(","));

@@ -27,7 +27,7 @@ class TasksController < ApplicationController
       end
     elsif
       # If not stimulus must be rails form
-      redirect_to board_path(@task.list.board)
+    render board_path(@task.list.board)
     end
   end
 

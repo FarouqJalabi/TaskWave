@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
 
-  before_action :set_board, only: [:show]
+  before_action :set_board, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [:create, :new]
   def index
     @user_boards = Board.where(creator_id:current_user)
@@ -23,14 +23,16 @@ class BoardsController < ApplicationController
       end
   end
   def update
-    @board = Board.find_by(id: params[:id])
-
     if @board.update(board_params)
       redirect_to @board #! Bad because rerenders board for no reason
     else
       render :show, status: :unprocessable_entity
     end
+  end
+  def destroy
+    @board.destroy
 
+    redirect_to root_path, status: :see_other
   end
   private
   def set_board

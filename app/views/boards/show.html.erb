@@ -21,6 +21,9 @@
       <%= form.select :public, [['Public', true], ['Private', false]] %>
   <% end %>
   </div>
+    <div>
+      <%= link_to "Delete board", board_path , data: { turbo_method: :delete } %>
+    </div>
   </div>
   <section class="flex gap-5">
     <%= render @board.lists %>

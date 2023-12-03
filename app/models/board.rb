@@ -14,6 +14,6 @@ class Board < ApplicationRecord
   }
 
   # Relations
-  belongs_to :creator, :class_name => 'User', dependent: :destroy
+  belongs_to :creator, :class_name => 'User'
   has_many :lists, dependent: :destroy
 end

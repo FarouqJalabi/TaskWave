@@ -1,5 +1,4 @@
 <section>
-<!-- ? Bad to copy paste same main style? -->
   <div class="w-screen h-screen fixed z-[-10] left-0 top-0"
        style="background: url('<%= @board.background_url %>'); background-size: cover; background-position:center;"
   ></div>
@@ -21,8 +20,8 @@
       <%= form.select :public, [['Public', true], ['Private', false]] %>
   <% end %>
   </div>
-    <div>
-      <%= link_to "Delete board", board_path , data: { turbo_method: :delete } %>
+    <div  data-controller="delete-task" data-action="drop->delete-task#deleteTask dragover->delete-task#allowDrop">
+      <%= link_to "Delete board", board_path , data: { turbo_method: :delete },  "data-task-path":board_lists_path(@board.id) %>
     </div>
   </div>
   <section class="flex gap-5">

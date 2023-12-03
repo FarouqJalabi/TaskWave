@@ -72,6 +72,7 @@ function updateRails(taskElement, listId, list) {
   let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
 
   const updatePath = taskElement.dataset.updatePath;
+  console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
   formData.append("tasksOrder", tasksIds.join(","));

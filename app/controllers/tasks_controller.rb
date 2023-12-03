@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  # before_action :set_task, only: [:update, :destroy]
   def create
     # ? Why @ if not sharing with html?
     @board = Board.find(params[:board_id])
@@ -31,7 +32,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def destroy
+    @task = Task.find(params[:id])
+    board_id = @task.list.board_id
+    @task.destroy
+    redirect_to board_path(board_id), status: :see_other
+  end
+
   private
+  # def set_task
+  #   @task = Task.find(params[:id])
+  # end
 
   def task_params
     params.require(:task).permit(:name, :list_id)

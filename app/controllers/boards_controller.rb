@@ -31,7 +31,6 @@ class BoardsController < ApplicationController
   end
   def destroy
     @board.destroy
-
     redirect_to root_path, status: :see_other
   end
   private

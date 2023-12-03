@@ -23,9 +23,14 @@ class BoardsController < ApplicationController
       end
   end
   def update
-    @board = Board.find(params[:id])
-    @board.update(board_params)
-    redirect_to @board
+    @board = Board.find_by(id: params[:id])
+
+    if @board.update(board_params)
+      redirect_to @board #! Bad because rerenders board for no reason
+    else
+      render :show, status: :unprocessable_entity
+    end
+
   end
   private
   def set_board

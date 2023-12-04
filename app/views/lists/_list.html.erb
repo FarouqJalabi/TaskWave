@@ -7,6 +7,14 @@
 
   <%= form_with model: list, url: board_list_path(@board.id, list.id), html:{hidden:true} do |form|  %>
     <%= form.text_field :name, class: "p-0 font-bold text-xl",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+      <%= link_to image_tag("trash.svg", alt: "Delete board", class: "bg-dark p-2 rounded"),
+                  board_list_path(@board.id, list.id),
+                  data: {
+                    turbo_method: :delete,
+                    controller: "delete-list",
+                    action: "click->delete-list#deleteElement"
+                  } %>
+
   <% end %>
   </div>
 
@@ -20,6 +28,7 @@
         <%= form.hidden_field :list_id, value: list.id %>
         <%= form.text_field :name, class: "p-0", "data-editable-target":"input", "data-action":"focusout->editable#focusout " %>
       </section>
-    <% end %>
+
+  <% end %>
   </div>
 </section>

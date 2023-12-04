@@ -3,7 +3,7 @@
        style="background: url('<%= @board.background_url %>'); background-size: cover; background-position:center;"
   ></div>
 
-  <div class="flex">
+  <div class="flex gap-2">
   <div  data-controller="editable">
     <h1 class="text-2xl font-bold"
         data-action="dblclick->editable#dblclick"
@@ -21,7 +21,7 @@
   <% end %>
   </div>
     <div  data-controller="delete-task" data-action="drop->delete-task#deleteTask dragover->delete-task#allowDrop">
-      <%= link_to "Delete board", board_path , data: { turbo_method: :delete },  "data-task-path":board_lists_path(@board.id) %>
+      <%= link_to image_tag("trash.svg", alt:"Delete board", class: "bg-dark p-2 rounded" ), board_path , data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete board?" },  "data-task-path":board_lists_path(@board.id) %>
     </div>
   </div>
   <section class="flex gap-5">

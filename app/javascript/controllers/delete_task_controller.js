@@ -9,12 +9,13 @@ export default class extends Controller {
 
     const data = e.dataTransfer.getData("text/plain");
     const draggedTask = document.getElementById(data);
-    updateRails(draggedTask, e.target);
+    updateRails(draggedTask, e.target.closest("a"));
   }
 }
 // For external functions
 function updateRails(draggedTask, trash) {
   const list = draggedTask.closest('[id*="list-"]');
+
   const taskPath =
     trash.dataset.taskPath +
     "/" +

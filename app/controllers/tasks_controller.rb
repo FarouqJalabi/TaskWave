@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     old_list_id = @task.list_id
     @task.update task_params
     @task.save
-    if old_task_place != @task.place or old_list_id != @task.list_id
+    if old_list_id != @task.list_id or params[:tasksOrder]
       # Only stimulus updates place
       # Actually needs updating
       task_order =  params[:tasksOrder].split(",")

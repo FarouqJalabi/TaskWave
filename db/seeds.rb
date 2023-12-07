@@ -45,7 +45,9 @@ board_names.each do |board_name|
 
   list_names.each do |list_name|
     list = board.lists.create(name:list_name)
-    list.tasks.create(name: task_names.sample)
+    (1..rand(2..10)).each do |num|
+      list.tasks.create(name: task_names.sample)
+    end
   end
 end
 

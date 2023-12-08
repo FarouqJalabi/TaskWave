@@ -2,7 +2,7 @@
 
 
   <h1 class="text-2xl font-bold">Your boards</h1>
-  <div class="flex gap-5 ">
+  <div class="flex gap-5 overflow-auto">
   <%= render @user_boards %>
   <a class="flex w-80 h-44 p-5 rounded-lg overflow-hidden items-center justify-center bg-gray-300 font-extrabold text-4xl" href="<%= new_board_path %>">
     <h1 class="z-10">+</h1>
@@ -11,7 +11,7 @@
   </div>
 
   <h1 class="text-2xl font-bold">Other boards</h1>
-  <div class="flex gap-5">
+  <div class="flex gap-5 overflow-auto">
     <%= render @other_boards %>
   </div>
 </section>

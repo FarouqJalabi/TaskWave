@@ -13,7 +13,7 @@
   </head>
 
   <body>
-    <nav class="bg-dark w-full p-5 flex items-center">
+    <nav class="bg-dark w-full p-5 flex items-center ">
       <a href="<%= root_path %>">
       <%= image_tag("Logo.svg", alt:"Logo of task-wave", class: "w-36 md:w-48") %>
       </a>
@@ -26,8 +26,10 @@
       <% end %>
       </div>
     </nav>
-    <main class="px-5 mt-4">
+
+    <main class="px-5 mt-4 overflow-x-hidden">
       <%= yield %>
     </main>
+
   </body>
 </html>

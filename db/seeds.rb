@@ -51,6 +51,6 @@ board_names.each do |board_name|
   end
 end
 
-User.first.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample)
-User.second.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample)
+User.first.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample, public: false)
+User.second.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample, public: false)
 

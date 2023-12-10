@@ -87,6 +87,9 @@ function updateRails(taskElement, listId, list) {
         ?.content,
     },
   }).then(function (response) {
+    if (response.status === 401) {
+      window.location.href = window.location.href; // Reload the current URL
+    }
     if (response.status !== 204) {
       console.log("Error task update:");
       console.log(response);

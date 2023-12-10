@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  # before_action :set_task, only: [:update, :destroy]
+  before_action :authorize_user!
+  before_action :set_task, only: [:update, :destroy ]
   def create
     # ? Why @ if not sharing with html?
     @board = Board.find(params[:board_id])
@@ -11,7 +12,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
     old_task_place = @task.place
     old_list_id = @task.list_id
     @task.update task_params
@@ -33,18 +33,23 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     board_id = @task.list.board_id
     @task.destroy
     redirect_to board_path(board_id), status: :see_other
   end
 
   private
-  # def set_task
-  #   @task = Task.find(params[:id])
-  # end
-
+  def set_task
+     @task = Task.find(params[:id])
+   end
   def task_params
     params.require(:task).permit(:name, :list_id)
+  end
+  def authorize_user!
+    authenticate_user!
+    @board = Board.find(params[:board_id])
+    unless @board.creator == current_user
+      render "boards/show", status: :unauthorized
+    end
   end
 end

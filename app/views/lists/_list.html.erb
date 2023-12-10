@@ -3,6 +3,7 @@
   <div  data-controller="editable">
   <h1 class="font-bold text-xl"
       data-action="dblclick->editable#dblclick"
+      data-editable-target="name"
   ><%= list.name %></h1>
 
   <%= form_with model: list, url: board_list_path(@board.id, list.id), html:{hidden:true} do |form|  %>
@@ -22,7 +23,7 @@
   <!-- We are still in board#show. url has to be specified, auto one is bad -->
   <div data-controller="editable">
 
-    <button data-action="click->editable#dblclick">New Task +</button>
+    <button data-action="click->editable#dblclick" data-editable-target="name">New Task +</button>
     <%= form_with model: [list, list.tasks.build], url: board_list_tasks_path(@board, list), html:{hidden:true, "data-action":"submit->editable#submit"}  do |form| %>
       <section class="bg-gray-300 p-2 rounded h-min">
         <%= form.hidden_field :list_id, value: list.id %>

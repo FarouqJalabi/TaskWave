@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
-
-  before_action :set_board, only: [:show, :update, :destroy]
+  before_action :authorize_user!, only: [:destroy, :update]
   before_action :authenticate_user!, only: [:create, :new]
+  before_action :set_board, only: [:show, :update, :destroy]
   def index
     @user_boards = Board.where(creator_id:current_user)
     @other_boards = Board.where(public: true).where.not(creator_id:current_user)
@@ -39,5 +39,12 @@ class BoardsController < ApplicationController
   end
   def board_params
     params.require(:board).permit(:name, :public, :background_url)
+  end
+  def authorize_user!
+    authenticate_user!
+    @board = Board.find(params[:id])
+    unless @board.creator == current_user
+      render :show, status: :unauthorized
+    end
   end
 end

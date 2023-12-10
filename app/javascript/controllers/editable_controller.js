@@ -13,11 +13,14 @@ export default class extends Controller {
     this.formTarget.hidden = false;
 
     this.inputTarget.focus();
+    // Mouse end of name
     let v = this.inputTarget.value;
     this.inputTarget.value = "";
     this.inputTarget.value = v;
   }
   focusout(ev) {
+    this.nameTarget.hidden = false;
+    this.formTarget.hidden = true;
     // Assuming input is focusout
     if (!this.formSubmitted) {
       this.formTarget.submit();

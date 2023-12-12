@@ -23,6 +23,7 @@ export default class extends Controller {
     this.formTarget.hidden = true;
     // Assuming input is focusout
     if (!this.formSubmitted) {
+      ev.preventDefault(); // Prevent the default form submission
       this.formTarget.submit();
       this.formSubmitted = true;
     }
@@ -30,7 +31,8 @@ export default class extends Controller {
   submit(ev) {
     if (this.formSubmitted) {
       ev.preventDefault();
+    } else {
+      this.formSubmitted = true;
     }
-    this.formSubmitted = true;
   }
 }

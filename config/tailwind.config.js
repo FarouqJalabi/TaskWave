@@ -1,5 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-
+const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./public/*.html",
@@ -13,6 +13,10 @@ module.exports = {
         comfortable: "#55EE5B",
         approaching: "#EEA855",
         urgent: "#EE5555",
+
+        link: colors.black,
+
+        grey: "#ECECEC",
         dark: "#242424",
       },
       fontFamily: {

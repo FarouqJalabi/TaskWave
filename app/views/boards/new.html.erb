@@ -1,11 +1,8 @@
-<section>
-  <h1 class="text-2xl font-bold">Create board</h1>
-
-  <%= form_with model: @board do |form| %>
+  <%= form_with html: {class: "flex flex-col w-64 gap-2"}, model: @board  do |form| %>
+    <h1 class="text-2xl font-bold">Create board</h1>
     <div>
-
       <%= form.label "Visibility" %>
-      <%= form.select :public, [['Public', true], ['Private', false]] %>
+      <%= form.select :public, [['Public', true], ['Private', false]], {}, class: "rounded bg-grey border-0" %>
 
       <% @board.errors.full_messages_for(:public).each do |message| %>
         <div><%= message %></div>
@@ -13,20 +10,19 @@
     </div>
 
     <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+      <%= form.text_field :name, placeholder:"name", class: "rounded bg-grey border-0" %>
+
       <% @board.errors.full_messages_for(:name).each do |message| %>
-      <div><%= message %></div>
+        <div><%= message %></div>
       <% end %>
     </div>
+
     <div>
-      <%= form.select :background_url, options_for_select(
-        Board::background_urls.map { |k,v| [v, k] }) %>
+      <%= form.select :background_url,  options_for_select(
+        Board::background_urls.map { |k,v| [v, k] }), {}, class: "rounded bg-grey border-0" %>
     </div>
 
-
-    <div>
+    <div class="text-white bg-dark px-8 py-2 rounded w-min">
       <%= form.submit %>
     </div>
   <% end %>
-</section>

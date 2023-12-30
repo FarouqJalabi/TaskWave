@@ -1,9 +1,6 @@
 class Board < ApplicationRecord
   # Validations
   validates_presence_of :name
-  #* False don't satisfy presence_of
-  # validates_presence_of :public
-  validates_inclusion_of :public,  in: [true, false]
 
   validates_presence_of :background_url
   # https://github.com/rails/rails/pull/49769#issuecomment-1777833124

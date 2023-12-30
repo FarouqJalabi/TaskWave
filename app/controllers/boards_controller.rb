@@ -36,7 +36,7 @@ class BoardsController < ApplicationController
     @board = Board.find(params[:id])
   end
   def board_params
-    params.require(:board).permit(:name, :public, :background_url)
+    params.require(:board).permit(:name, :background_url)
   end
   def authorize_user!
     authenticate_user!

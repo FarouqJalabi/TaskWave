@@ -1,11 +1,12 @@
 <section>
+  <!-- Background -->
   <div class="w-screen h-screen fixed z-[-10] left-0 top-0"
        style="background: url('<%= @board.background_url %>'); background-size: cover; background-position:center;"
   ></div>
 
-  <div class="flex gap-2">
-  <div  data-controller="editable">
-    <h1 class="text-2xl font-bold"
+  <div class="flex gap-2 bg-[rgba(0,0,0,0.5)] p-3 items-center">
+  <div data-controller="editable">
+    <h1 class="text-2xl font-bold text-white"
         data-action="dblclick->editable#dblclick"
         data-editable-target="name"
     ><%= @board.name %></h1>

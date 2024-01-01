@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   dragstart(e) {
     e.dataTransfer.setData("text/plain", e.target.id);
+    console.log(e.target);
   }
   dragover(e) {
     const list = e.target.closest('[id*="list"]');
@@ -54,6 +55,10 @@ export default class extends Controller {
 
     task.classList.remove("task-over", "task-under");
     list.children[list.children.length - 1].classList.remove("task-over");
+    if (!data.startsWith("task-")) {
+      // Didn't drag a task
+      return;
+    }
     const nextSibling = task.nextSibling;
     if (dragOverHalf(list, task, e.clientY) || noTasks) {
       list.insertBefore(draggedTask, task);
@@ -72,7 +77,6 @@ function updateRails(taskElement, listId, list) {
   let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
 
   const updatePath = taskElement.dataset.updatePath;
-  console.log(updatePath);
   let formData = new FormData();
   formData.append("task[list_id]", listId);
   formData.append("tasksOrder", tasksIds.join(","));

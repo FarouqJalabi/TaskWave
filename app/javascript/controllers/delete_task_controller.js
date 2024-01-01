@@ -8,23 +8,16 @@ export default class extends Controller {
     e.preventDefault();
 
     const data = e.dataTransfer.getData("text/plain");
+    console.log(data);
     const draggedTask = document.getElementById(data);
     updateRails(draggedTask, e.target.closest("a"));
   }
 }
 // For external functions
 function updateRails(draggedTask, trash) {
-  const list = draggedTask.closest('[id*="list-"]');
-
-  const taskPath =
-    trash.dataset.taskPath +
-    "/" +
-    list.id.split("-")[1] +
-    "/tasks/" +
-    draggedTask.id.split("-")[1];
-
+  const updatePath = draggedTask.dataset.updatePath;
   draggedTask.remove();
-  fetch(taskPath, {
+  fetch(updatePath, {
     method: "DELETE",
     dataType: "script",
     credentials: "include",

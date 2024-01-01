@@ -1,5 +1,6 @@
 <!-- !When dragging over gap 2 the list thinks it's dragging over list and not between tasks-->
-<section class="bg-gray-300 p-2 rounded gap-2 list flex flex-col min-w-[272px] h-min" data-controller="drag" id="list-<%= list.id %>"
+<!--? Maybe adding border instead of gap? (margin don't work tried) -->
+<section class="bg-gray-300 p-2 rounded gap-2 flex flex-col min-w-[272px] h-min" data-controller="drag" id="list-<%= list.id %>"
   draggable="true"
   data-update-path="<%= board_list_path(@board.id, list) %>"
   data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave">
@@ -11,21 +12,13 @@
 
   <%= form_with model: list, url: board_list_path(@board.id, list.id), html:{hidden:true} do |form|  %>
     <%= form.text_field :name, class: "p-0 font-bold text-xl",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
-      <%= link_to image_tag("trash.svg", alt: "Delete board", class: "bg-dark p-2 rounded"),
-                  board_list_path(@board.id, list.id),
-                  data: {
-                    turbo_method: :delete,
-                    controller: "delete-list",
-                    action: "click->delete-list#deleteElement"
-                  } %>
-
   <% end %>
   </div>
 
   <%= render list.tasks.sort_by(&:place), list: list %>
+
   <!-- We are still in board#show. url has to be specified, auto one is bad -->
   <div data-controller="editable">
-
     <button data-action="click->editable#dblclick" data-editable-target="name">New Task +</button>
     <%= form_with model: [list, list.tasks.build], url: board_list_tasks_path(@board, list), html:{hidden:true, "data-action":"submit->editable#submit"}  do |form| %>
       <section class="bg-gray-300 p-2 rounded h-min">

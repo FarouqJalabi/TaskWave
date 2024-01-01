@@ -2,10 +2,18 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   dragstart(e) {
-    e.dataTransfer.setData("text/plain", e.target.id);
-    console.log(e.target);
+    // ? Why task gets dragstart twice? and not list
+    if (e.target.id.startsWith("task")) {
+      // Is task
+      e.dataTransfer.setData("taskwave/task", e.target.id);
+    } else {
+      e.dataTransfer.setData("taskwave/list", e.target.id);
+    }
   }
   dragover(e) {
+    if (!e.dataTransfer.types.includes("taskwave/task")) {
+      return;
+    }
     const list = e.target.closest('[id*="list"]');
     let task = e.target.closest('[id*="task"]');
     let position = dragOverHalf(list, task, e.clientY) ? "over" : "under";
@@ -28,6 +36,9 @@ export default class extends Controller {
   }
 
   allowDrop(e) {
+    if (!e.dataTransfer.types.includes("taskwave/task")) {
+      return;
+    }
     e.preventDefault();
     const list = e.target.closest('[id*="list"]');
     let last_child = list.children[list.children.length - 1];
@@ -45,7 +56,7 @@ export default class extends Controller {
   drop(e) {
     e.preventDefault();
 
-    const data = e.dataTransfer.getData("text/plain");
+    const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
     const list = e.target.closest('[id*="list-"]');
     const task =
@@ -55,10 +66,6 @@ export default class extends Controller {
 
     task.classList.remove("task-over", "task-under");
     list.children[list.children.length - 1].classList.remove("task-over");
-    if (!data.startsWith("task-")) {
-      // Didn't drag a task
-      return;
-    }
     const nextSibling = task.nextSibling;
     if (dragOverHalf(list, task, e.clientY) || noTasks) {
       list.insertBefore(draggedTask, task);

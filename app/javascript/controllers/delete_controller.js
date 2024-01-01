@@ -1,14 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
-
+// * For dropping things into trash and deleting them
 export default class extends Controller {
   allowDrop(e) {
     e.preventDefault();
   }
   deleteTask(e) {
     e.preventDefault();
-
-    const data = e.dataTransfer.getData("text/plain");
-    console.log(data);
+    const data_type = e.dataTransfer.types[0];
+    const data = e.dataTransfer.getData(data_type);
     const draggedTask = document.getElementById(data);
     updateRails(draggedTask, e.target.closest("a"));
   }

@@ -67,7 +67,7 @@ export default class extends Controller {
     if (e.dataTransfer.types.includes("taskwave/list")) {
       const data = e.dataTransfer.getData("taskwave/list");
       const draggedList = document.getElementById(data);
-      const listContainer = e.target.closest("#listContainer"); // Assumes every board :show have only one listContainer
+      const listContainer = document.getElementById("listContainer"); // Assumes every board :show have only one listContainer
       const list =
         e.target.closest('[id*="list-"]') ||
         listContainer.children[listContainer.children.length - 1];
@@ -75,6 +75,7 @@ export default class extends Controller {
 
       let [x, y] = dragOverHalf(list, e.clientX, e.clientY);
 
+      removeClasses(list, list);
       if (x) {
         // Left
         listContainer.insertBefore(draggedList, list);
@@ -84,6 +85,13 @@ export default class extends Controller {
       } else {
         listContainer.appendChild(draggedList);
       }
+      let lists = listContainer.querySelectorAll('[id*="list-"]');
+      let listIds = Array.from(lists, (e) => e.id.split("-")[1]);
+
+      const updatePath = draggedList.dataset.updatePath;
+
+      updateRails(updatePath, listIds);
+      return;
     }
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
@@ -106,20 +114,20 @@ export default class extends Controller {
       list.appendChild(draggedTask);
     }
 
-    console.log("SDAA");
-    updateRails(draggedTask, list.id.split("-")[1], list);
+    let tasks = list.querySelectorAll('[id*="task-"]');
+    let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
+    const updatePath = draggedTask.dataset.updatePath;
+
+    updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
   }
 }
 // For external functions
-function updateRails(taskElement, listId, list) {
-  console.log("UPDAtign");
-  let tasks = list.querySelectorAll('[id*="task-"]');
-  let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
-
-  const updatePath = taskElement.dataset.updatePath;
+function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
   let formData = new FormData();
-  formData.append("task[list_id]", listId);
-  formData.append("tasksOrder", tasksIds.join(","));
+  if (parentId !== "") {
+    formData.append("task[list_id]", parentId);
+  }
+  formData.append(type + "sOrder", elementsOrder.join(","));
   fetch(updatePath, {
     body: formData,
     method: "PATCH",

@@ -26,7 +26,7 @@ class TasksController < ApplicationController
       respond_to do |format|
         format.json
       end
-    elsif
+    else
       # If not stimulus must be rails form
     render board_path(@task.list.board)
     end

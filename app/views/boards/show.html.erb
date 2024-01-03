@@ -26,11 +26,10 @@
       <%= link_to image_tag("trash.svg", alt:"Delete board", class: "bg-dark p-2 rounded" ), board_path , data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete board?" },  "data-task-path":board_lists_path(@board.id) %>
     </div>
   </div>
-  <section class="flex gap-5 overflow-auto mt-2 px-2 w-screen left-0 absolute ">
+  <section class="flex gap-5 overflow-auto mt-2 px-2 w-screen left-0 absolute" id="listContainer">
     <%= render @board.lists.sort_by(&:place) %>
 
     <div data-controller="editable" class="bg-gray-300 p-2 rounded h-min min-w-fit">
-
       <button data-action="click->editable#dblclick" data-editable-target="name">New List +</button>
         <%= form_with model: [@board, @board.lists.build], html:{hidden:true, "data-action":"submit->editable#submit"}  do |form| %>
         <%= form.text_field :name, class: "p-0 font-bold text-xl", "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>

@@ -16,15 +16,17 @@ export default class extends Controller {
     }
     const list = e.target.closest('[id*="list"]');
     let task = e.target.closest('[id*="task"]');
-    let position = dragOverHalf(list, task, e.clientY) ? "over" : "under";
+    let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
+    console.log(y, "Huh?");
+    let position = y ? "over" : "under";
     task.classList.remove("task-over", "task-under");
     task.classList.add("task-" + position);
   }
   drag(e) {
-    e.target.hidden = true;
+    e.target.style.display = "none";
   }
   dragend(e) {
-    e.target.hidden = false;
+    e.target.style.display = "inherit";
   }
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
@@ -32,15 +34,21 @@ export default class extends Controller {
       e.target.closest('[id*="task"]') ||
       list.children[list.children.length - 1];
     list.children[list.children.length - 1].classList.remove("task-over");
-    task.classList.remove("task-over", "task-under");
+    removeClasses(task, list);
   }
 
   allowDrop(e) {
-    if (!e.dataTransfer.types.includes("taskwave/task")) {
+    const list = e.target.closest('[id*="list"]');
+
+    e.preventDefault();
+    if (e.dataTransfer.types.includes("taskwave/list")) {
+      let [x, y] = dragOverHalf(list, e.clientX, e.clientY);
+      let position = x ? "left" : "right";
+      list.classList.remove("list-left", "list-right");
+      list.classList.add("list-" + position);
+
       return;
     }
-    e.preventDefault();
-    const list = e.target.closest('[id*="list"]');
     let last_child = list.children[list.children.length - 1];
     const hasClass =
       list.querySelector(
@@ -53,9 +61,30 @@ export default class extends Controller {
     }
   }
 
+  // ! Shouldn't update rails if no change in order
   drop(e) {
     e.preventDefault();
+    if (e.dataTransfer.types.includes("taskwave/list")) {
+      const data = e.dataTransfer.getData("taskwave/list");
+      const draggedList = document.getElementById(data);
+      const listContainer = e.target.closest("#listContainer"); // Assumes every board :show have only one listContainer
+      const list =
+        e.target.closest('[id*="list-"]') ||
+        listContainer.children[listContainer.children.length - 1];
+      const nextSibling = list.nextSibling;
 
+      let [x, y] = dragOverHalf(list, e.clientX, e.clientY);
+
+      if (x) {
+        // Left
+        listContainer.insertBefore(draggedList, list);
+      } else if (nextSibling) {
+        // Right
+        listContainer.insertBefore(draggedList, nextSibling);
+      } else {
+        listContainer.appendChild(draggedList);
+      }
+    }
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
     const list = e.target.closest('[id*="list-"]');
@@ -64,22 +93,26 @@ export default class extends Controller {
       list.children[list.children.length - 1];
     const noTasks = task === list.children[list.children.length - 1];
 
-    task.classList.remove("task-over", "task-under");
-    list.children[list.children.length - 1].classList.remove("task-over");
+    removeClasses(task, list);
     const nextSibling = task.nextSibling;
-    if (dragOverHalf(list, task, e.clientY) || noTasks) {
+    let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
+    if (y || noTasks) {
+      //Over
       list.insertBefore(draggedTask, task);
     } else if (nextSibling) {
+      //Over
       list.insertBefore(draggedTask, nextSibling);
     } else {
       list.appendChild(draggedTask);
     }
 
+    console.log("SDAA");
     updateRails(draggedTask, list.id.split("-")[1], list);
   }
 }
 // For external functions
 function updateRails(taskElement, listId, list) {
+  console.log("UPDAtign");
   let tasks = list.querySelectorAll('[id*="task-"]');
   let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
 
@@ -107,8 +140,15 @@ function updateRails(taskElement, listId, list) {
 function taskPlace(list, task) {
   return Array.from(list.children).indexOf(task);
 }
-function dragOverHalf(list, task, clientY) {
-  let top = task.getBoundingClientRect().top;
-  let relativeY = clientY - top - task.offsetHeight / 2;
-  return relativeY < 0;
+// Removes drag over classes
+function removeClasses(task, list) {
+  task.classList.remove("task-over", "task-under");
+  list.classList.remove("list-left", "list-right");
+  list.children[list.children.length - 1].classList.remove("task-over");
+}
+function dragOverHalf(element, clientX, clientY) {
+  let rect = element.getBoundingClientRect();
+  let relativeX = clientX - rect.left - element.offsetWidth / 2;
+  let relativeY = clientY - rect.top - element.offsetHeight / 2;
+  return [relativeX < 0, relativeY < 0];
 }

@@ -3,7 +3,7 @@
 <section class="bg-gray-300 p-2 rounded gap-2 flex flex-col min-w-[272px] h-min" data-controller="drag" id="list-<%= list.id %>"
   draggable="true"
   data-update-path="<%= board_list_path(@board.id, list) %>"
-  data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave">
+  data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag">
   <div  data-controller="editable">
   <h1 class="font-bold text-xl"
       data-action="dblclick->editable#dblclick"

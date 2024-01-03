@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.task-over, .task-under {
+.list-left,.list-right, .task-over, .task-under {
     position: relative;
 }
 
@@ -34,7 +34,31 @@
     position: absolute;
     background: grey;
 }
+.list-left::before {
+    pointer-events: none;
+    content: "";
 
+    height: 100%;
+    width: 5px;
+    left: 0;
+
+    border-radius: 50px;
+    position: absolute;
+    background: grey;
+}
+
+.list-right::after {
+    pointer-events: none;
+    content: "";
+
+    height: 100%;
+    width: 5px;
+    right: 0;
+
+    border-radius: 50px;
+    position: absolute;
+    background: grey;
+}
 @layer components {
 
 }

@@ -43,14 +43,14 @@ task_names = [
 board_names.each do |board_name|
   board = User.first.boards.find_or_create_by!(name: board_name, background_url: Board::background_urls.keys.sample)
 
-  list_names.each do |list_name|
-    list = board.lists.create(name:list_name)
-    (1..rand(2..10)).each do |num|
-      list.tasks.create(name: task_names.sample)
+  list_names.each_with_index do |list_name, list_index|
+    list = board.lists.create(name:list_name,place: list_index )
+    (1..rand(2..10)).each_with_index do |num, index|
+      list.tasks.create(name: task_names.sample, place:index)
     end
   end
 end
 
-User.first.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample, public: false)
-User.second.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample, public: false)
+User.first.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample)
+User.second.boards.find_or_create_by!(name: "Private board", background_url: Board::background_urls.keys.sample)
 

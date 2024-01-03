@@ -17,7 +17,6 @@ export default class extends Controller {
     const list = e.target.closest('[id*="list"]');
     let task = e.target.closest('[id*="task"]');
     let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
-    console.log(y, "Huh?");
     let position = y ? "over" : "under";
     task.classList.remove("task-over", "task-under");
     task.classList.add("task-" + position);

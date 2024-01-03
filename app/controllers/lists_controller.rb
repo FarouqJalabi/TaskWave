@@ -5,12 +5,10 @@ class ListsController < ApplicationController
     @board = Board.find(params[:board_id])
     @list = @board.lists.create(list_params)
     @list.save
-    puts "FAROUQ", list_params
     redirect_to board_path(@board)
   end
   def update
     if params[:listsOrder]
-      puts "Farouq"
       list_order =  params[:listsOrder].split(",")
       conditions = list_order.map { |id| "WHEN #{id} THEN #{list_order.index(id)}" }.join(' ')
       List.where(id: list_order).update_all(["place = CASE id #{conditions} END"])
@@ -21,7 +19,7 @@ class ListsController < ApplicationController
     else
       # redirect_to board_path(@list.board_id)
       @list.update(list_params)
-      render board_path(@list.board_id)
+      redirect_to board_path(@list.board_id)
     end
   end
   def destroy

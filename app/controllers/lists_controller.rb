@@ -7,8 +7,20 @@ class ListsController < ApplicationController
     redirect_to board_path(@board)
   end
   def update
-    @list.update(list_params)
-    redirect_to board_path(@list.board_id)
+    if params[:listsOrder]
+      puts "Farouq"
+      list_order =  params[:listsOrder].split(",")
+      conditions = list_order.map { |id| "WHEN #{id} THEN #{list_order.index(id)}" }.join(' ')
+      List.where(id: list_order).update_all(["place = CASE id #{conditions} END"])
+
+      respond_to do |format|
+        format.json
+      end
+    else
+      # redirect_to board_path(@list.board_id)
+      @list.update(list_params)
+      render board_path(@list.board_id)
+    end
   end
   def destroy
     board_id = @list.board_id
@@ -17,7 +29,8 @@ class ListsController < ApplicationController
   end
   private
   def list_params
-    params.require(:list).permit(:name)
+    params.require(:list).permit(:name) if params[:list].present?
+    params.permit(:listsOrder) if params[:listsOrder].present?
   end
   def set_list
     @list = List.find(params[:id])

@@ -12,11 +12,9 @@ class TasksController < ApplicationController
   end
 
   def update
-    old_task_place = @task.place
-    old_list_id = @task.list_id
     @task.update task_params
     @task.save
-    if old_list_id != @task.list_id or params[:tasksOrder]
+    if params[:tasksOrder]
       # Only stimulus updates place
       # Actually needs updating
       task_order =  params[:tasksOrder].split(",")
@@ -28,7 +26,7 @@ class TasksController < ApplicationController
       end
     else
       # If not stimulus must be rails form
-    render board_path(@task.list.board)
+      redirect_to board_path(@task.list.board)
     end
   end
 

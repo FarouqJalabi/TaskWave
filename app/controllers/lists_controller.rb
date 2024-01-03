@@ -4,6 +4,8 @@ class ListsController < ApplicationController
   def create
     @board = Board.find(params[:board_id])
     @list = @board.lists.create(list_params)
+    @list.save
+    puts "FAROUQ", list_params
     redirect_to board_path(@board)
   end
   def update
@@ -29,8 +31,13 @@ class ListsController < ApplicationController
   end
   private
   def list_params
-    params.require(:list).permit(:name) if params[:list].present?
-    params.permit(:listsOrder) if params[:listsOrder].present?
+    if params[:list].present?
+      params.require(:list).permit(:name)
+    elsif params[:listsOrder].present?
+      params.permit(:listsOrder)
+    else
+      {}
+    end
   end
   def set_list
     @list = List.find(params[:id])

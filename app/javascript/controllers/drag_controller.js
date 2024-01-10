@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-
+// !When dragging between tasks or lists drops at end instead of between
 export default class extends Controller {
   dragstart(e) {
     // ? Why task gets dragstart twice? and not list

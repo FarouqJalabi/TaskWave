@@ -20,19 +20,21 @@
     border-radius: 50px;
     background: grey;
 }
-.task-over {
-    /*border-top: 32px solid transparent; !* Adjusted to match the task height *!*/
-    padding-top: 32px;
+
+.task-over::before {
+    pointer-events: none;
+    content: "";
+
+    left: 50%;
+    transform: translate(-50%,-4px);
+    width: 90%;
+    height: 5px;
+
+    position: absolute;
+    border-radius: 50px;
+    background: grey;
 }
-/*.task-over::before {*/
-/*    margin-top: -25px;*/
-/*    content: "";*/
-/*    height: 25px;*/
-/*    background: red;*/
-/*    display: block;*/
-/*    position: absolute;*/
-/*    pointer-events: none;*/
-/*}*/
+
 .list-left::before {
     pointer-events: none;
     content: "";

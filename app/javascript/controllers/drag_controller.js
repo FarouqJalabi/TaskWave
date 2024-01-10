@@ -14,11 +14,13 @@ export default class extends Controller {
     if (!e.dataTransfer.types.includes("taskwave/task")) {
       return;
     }
-    const list = e.target.closest('[id*="list"]');
-    let task = e.target.closest('[id*="task"]');
-    let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
+    let task = e.target.closest('[id*="task-"]');
+    let actualTask = task.querySelector(".actual-task");
+
+    let [x, y] = dragOverHalf(actualTask ?? task, e.clientX, e.clientY);
     let position = y ? "over" : "under";
-    task.classList.remove("task-over", "task-under");
+    let otherPosition = y ? "under" : "over"; //Position to remove
+    task.classList.remove("task-" + otherPosition);
     task.classList.add("task-" + position);
   }
   drag(e) {
@@ -30,7 +32,7 @@ export default class extends Controller {
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
     let task =
-      e.target.closest('[id*="task"]') ||
+      e.target.closest('[id*="task-"]') ||
       list.children[list.children.length - 1];
     list.children[list.children.length - 1].classList.remove("task-over");
     removeClasses(task, list);
@@ -48,10 +50,11 @@ export default class extends Controller {
 
       return;
     }
+
     let last_child = list.children[list.children.length - 1];
     const hasClass =
       list.querySelector(
-        ':is([class*="task-over"], [class*="task-under"]):is([id*="task"])'
+        ':is([class*="task-over"], [class*="task-under"]):is([id*="task-"])'
       ) !== null;
     if (hasClass) {
       last_child.classList.remove("task-over");
@@ -143,9 +146,6 @@ function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
       console.log(response);
     }
   });
-}
-function taskPlace(list, task) {
-  return Array.from(list.children).indexOf(task);
 }
 // Removes drag over classes
 function removeClasses(task, list) {

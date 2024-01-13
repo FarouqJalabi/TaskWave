@@ -42,6 +42,7 @@
     height: 100%;
     width: 5px;
     left: 0;
+    top: -2.5px;
 
     border-radius: 50px;
     position: absolute;
@@ -55,10 +56,21 @@
     height: 100%;
     width: 5px;
     right: 0;
+    top: -2.5px;
 
     border-radius: 50px;
     position: absolute;
     background: grey;
+}
+
+#trashButton {
+    border: transparent 4px solid;
+    transition: 200ms;
+}
+/*Showing if something is able to be trashed */
+.trash-able {
+   border: white 4px solid !important;
+    transition: 2000ms;
 }
 @layer components {
 

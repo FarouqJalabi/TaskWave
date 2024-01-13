@@ -2,8 +2,9 @@ import { Controller } from "@hotwired/stimulus";
 // !When dragging between tasks or lists drops at end instead of between
 export default class extends Controller {
   dragstart(e) {
+    document.querySelector("#trashButton").classList.add("trash-able");
     // ? Why task gets dragstart twice? and not list
-    if (e.target.id.startsWith("task")) {
+    if (e.target.id.startsWith("task-")) {
       // Is task
       e.dataTransfer.setData("taskwave/task", e.target.id);
     } else {
@@ -28,6 +29,7 @@ export default class extends Controller {
   }
   dragend(e) {
     e.target.style.display = "inherit";
+    document.querySelector("#trashButton").classList.remove("trash-able");
   }
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
@@ -66,6 +68,7 @@ export default class extends Controller {
   // ! Shouldn't update rails if no change in order
   drop(e) {
     e.preventDefault();
+    document.querySelector("#trashButton").classList.remove("trash-able");
     if (e.dataTransfer.types.includes("taskwave/list")) {
       const data = e.dataTransfer.getData("taskwave/list");
       const draggedList = document.getElementById(data);

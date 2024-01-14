@@ -4,8 +4,10 @@ export default class extends Controller {
   allowDrop(e) {
     e.preventDefault();
   }
+  // ! Need to chnage name
   deleteTask(e) {
     e.preventDefault();
+    e.target.closest(".trash-able").classList?.remove("trash-able");
     const data_type = e.dataTransfer.types[0];
     const data = e.dataTransfer.getData(data_type);
     const draggedTask = document.getElementById(data);

@@ -100,33 +100,35 @@ export default class extends Controller {
       updateRails(updatePath, listIds);
       return;
     }
+
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
     draggedTask.classList.add("border-4");
-    const list = e.target.closest('[id*="list-"]');
+    const taskContainer = e.target.closest(".taskContainer");
     const task =
       e.target.closest('[id*="task-"]') ||
-      list.children[list.children.length - 1];
-    const noTasks = task === list.children[list.children.length - 1];
+      taskContainer.children[taskContainer.children.length - 1];
+    const noTasks =
+      task === taskContainer.children[taskContainer.children.length - 1];
 
-    removeClasses(task, list);
+    removeClasses(task, taskContainer);
     const nextSibling = task.nextSibling;
     let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
     if (y || noTasks) {
-      //Over
-      list.insertBefore(draggedTask, task);
+      // Over
+      taskContainer.insertBefore(draggedTask, task);
     } else if (nextSibling) {
-      //Over
-      list.insertBefore(draggedTask, nextSibling);
+      // Under
+      taskContainer.insertBefore(draggedTask, nextSibling);
     } else {
-      list.appendChild(draggedTask);
+      taskContainer.appendChild(draggedTask);
     }
 
-    let tasks = list.querySelectorAll('[id*="task-"]');
+    let tasks = taskContainer.querySelectorAll('[id*="task-"]');
     let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
     const updatePath = draggedTask.dataset.updatePath;
 
-    updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
+    updateRails(updatePath, tasksIds, "task", taskContainer.id.split("-")[1]);
   }
 }
 // For external functions

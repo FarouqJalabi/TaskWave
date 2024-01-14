@@ -1,9 +1,9 @@
-<!-- !When dragging over gap 2 the list thinks it's dragging over list and not between tasks-->
-<!--? Maybe adding border instead of gap? (margin don't work tried) -->
-<section class="bg-gray-300 p-2 rounded gap-2 flex flex-col min-w-[272px] h-min" data-controller="drag" id="list-<%= list.id %>"
+<section class="border-[12px] border-transparent h-min" data-controller="drag" id="list-<%= list.id %>"
   draggable="true"
   data-update-path="<%= board_list_path(@board.id, list) %>"
   data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag">
+  <div class="bg-gray-300 p-2 rounded flex flex-col min-w-[272px] ">
+
   <div  data-controller="editable">
   <h1 class="font-bold text-xl"
       data-action="dblclick->editable#dblclick"
@@ -27,5 +27,6 @@
       </section>
 
   <% end %>
+  </div>
   </div>
 </section>

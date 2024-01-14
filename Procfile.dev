@@ -1,2 +1,2 @@
-web: env RUBY_DEBUG_OPEN=true bin/rails server -p 3000
-css: bin/rails tailwindcss:watch
+web: ruby bin/rails server -b 127.0.0.1 -p 3000 -e development
+css: ruby bin/rails tailwindcss:watch

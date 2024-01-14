@@ -109,6 +109,7 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    foreman (0.87.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -263,6 +264,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  foreman
   importmap-rails
   jbuilder
   pg (~> 1.1)
@@ -280,4 +282,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.22
+   2.5.4

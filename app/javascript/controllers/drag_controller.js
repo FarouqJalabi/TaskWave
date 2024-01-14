@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 // !When dragging between tasks or lists drops at end instead of between
 export default class extends Controller {
   dragstart(e) {
+    e.target.classList.remove("border-4", "border-[12px]");
     document.querySelector("#trashButton").classList.add("trash-able");
     // ? Why task gets dragstart twice? and not list
     if (e.target.id.startsWith("task-")) {
@@ -72,6 +73,7 @@ export default class extends Controller {
     if (e.dataTransfer.types.includes("taskwave/list")) {
       const data = e.dataTransfer.getData("taskwave/list");
       const draggedList = document.getElementById(data);
+      draggedList.classList.add("border-[12px]");
       const listContainer = document.getElementById("listContainer"); // Assumes every board :show have only one listContainer
       const list =
         e.target.closest('[id*="list-"]') ||
@@ -100,6 +102,7 @@ export default class extends Controller {
     }
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
+    draggedTask.classList.add("border-4");
     const list = e.target.closest('[id*="list-"]');
     const task =
       e.target.closest('[id*="task-"]') ||

@@ -1,18 +1,10 @@
-<section class=""  id="task-<%= task.id %>"
+<section class="border-4 border-transparent"  id="task-<%= task.id %>"
          draggable="true"
          data-action="dragstart->drag#dragstart dragover->drag#dragover dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag"
          <%# This is part of js not stimulus  %>
          data-update-path="<%= board_list_task_path(@board.id, list.id, task) %>"
          data-controller="editable"
 >
-<!--  !Screen readers reading this? unnecessary -->
-<!--  ?Maybe adding in preview drop later on? -->
-<!--  ?Content of task dragged here? preview size -->
-
-<!--  <span class="bg-[#808080FF] px-2 w-full inline-block mb-2 text-[#808080FF] hidden" id="over-task">-->
-    <%#= task.name %>
-<!--  </span>-->
-
   <div class="bg-white px-2 w-64 actual-task">
     <h1 data-action="dblclick->editable#dblclick" data-editable-target="name"><%= task.name %></h1>
       <%= form_with model: task, url: board_list_task_path(@board.id, list.id, task.id), html:{hidden:true, "data-action":"submit->editable#submit"} do |form|  %>
@@ -21,7 +13,4 @@
       <% end %>
   </div>
 
-<!--  <span class="bg-[#808080FF] px-2 w-full inline-block mt-2 text-[#808080FF] hidden" id="under-task">-->
-    <%#= task.name %>
-<!--  </span>-->
 </section>

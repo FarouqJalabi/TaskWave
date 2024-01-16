@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-// !When dragging between tasks or lists drops at end instead of between
+// !Whole things need to be refactored
 export default class extends Controller {
   dragstart(e) {
     e.target.classList.remove(e.target.dataset.borderClass);
@@ -43,7 +43,8 @@ export default class extends Controller {
   }
 
   allowDrop(e) {
-    const list = e.target.closest('[id*="list"]');
+    const list = e.target.closest('[id*="list-"]');
+    const taskContainer = list.querySelector(".taskContainer");
 
     e.preventDefault();
     if (e.dataTransfer.types.includes("taskwave/list")) {
@@ -55,9 +56,9 @@ export default class extends Controller {
       return;
     }
 
-    let last_child = list.children[list.children.length - 1];
+    let last_child = taskContainer.children[taskContainer.children.length - 1];
     const hasClass =
-      list.querySelector(
+      taskContainer.querySelector(
         ':is([class*="task-over"], [class*="task-under"]):is([id*="task-"])'
       ) !== null;
     if (hasClass) {
@@ -75,7 +76,7 @@ export default class extends Controller {
     if (e.dataTransfer.types.includes("taskwave/list")) {
       const data = e.dataTransfer.getData("taskwave/list");
       const draggedList = document.getElementById(data);
-      draggedList.classList.add(e.target.dataset.borderClass);
+      draggedList.classList.add(draggedList.dataset.borderClass);
       const listContainer = document.getElementById("listContainer"); // Assumes every board :show have only one listContainer
       const list =
         e.target.closest('[id*="list-"]') ||
@@ -105,8 +106,9 @@ export default class extends Controller {
 
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
-    draggedTask.classList.add(e.target.dataset.borderClass);
-    const taskContainer = e.target.closest(".taskContainer");
+    draggedTask.classList.add(draggedTask.dataset.borderClass);
+    const list = e.target.closest('[id*="list-"]');
+    const taskContainer = list.querySelector(".taskContainer");
     const task =
       e.target.closest('[id*="task-"]') ||
       taskContainer.children[taskContainer.children.length - 1];
@@ -129,7 +131,6 @@ export default class extends Controller {
     let tasks = taskContainer.querySelectorAll('[id*="task-"]');
     let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
     const updatePath = draggedTask.dataset.updatePath;
-    const list = taskContainer.parentElement;
     updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
   }
 }
@@ -159,9 +160,24 @@ function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
 }
 // Removes drag over classes
 function removeClasses(task, list) {
-  task.classList.remove("task-over", "task-under");
-  list.classList.remove("list-left", "list-right");
-  list.children[list.children.length - 1].classList.remove("task-over");
+  // task.classList.remove("task-over", "task-under");
+  // list.classList.remove("list-left", "list-right");
+  // const taskContainer = list.querySelector(".taskContainer");
+  // taskContainer.children[taskContainer.children.length - 1].classList.remove(
+  //   "task-over"
+  // );
+  // ? Removing unnecessary causing flickering?
+  // ?Easiest way
+  document
+    .querySelectorAll(".task-over, .task-under, .list-left, .list-right")
+    .forEach((element) =>
+      element.classList.remove(
+        "task-over",
+        "task-under",
+        "list-left",
+        "list-right"
+      )
+    );
 }
 function dragOverHalf(element, clientX, clientY) {
   let rect = element.getBoundingClientRect();

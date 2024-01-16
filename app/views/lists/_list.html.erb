@@ -1,6 +1,7 @@
 <section class="border-[12px] border-transparent h-min" data-controller="drag" id="list-<%= list.id %>"
   draggable="true"
   data-update-path="<%= board_list_path(@board.id, list) %>"
+  data-border-class="border-[12px]"
   data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag">
 
   <div class="bg-gray-300 p-2 rounded flex flex-col min-w-[272px] taskContainer">

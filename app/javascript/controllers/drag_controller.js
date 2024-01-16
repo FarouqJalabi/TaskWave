@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 // !When dragging between tasks or lists drops at end instead of between
 export default class extends Controller {
   dragstart(e) {
-    e.target.classList.remove("border-4", "border-[12px]");
+    e.target.classList.remove(e.target.dataset.borderClass);
     document.querySelector("#trashButton").classList.add("trash-able");
     // ? Why task gets dragstart twice? and not list
     if (e.target.id.startsWith("task-")) {
@@ -31,6 +31,7 @@ export default class extends Controller {
   dragend(e) {
     e.target.style.display = "inherit";
     document.querySelector("#trashButton").classList.remove("trash-able");
+    e.target.classList.add(e.target.dataset.borderClass);
   }
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
@@ -66,14 +67,15 @@ export default class extends Controller {
     }
   }
 
-  // ! Shouldn't update rails if no change in order
+  // * Shouldn't update rails if no change in order
+  // * draggedElement = draggedList || draggedTask
   drop(e) {
     e.preventDefault();
     document.querySelector("#trashButton").classList.remove("trash-able");
     if (e.dataTransfer.types.includes("taskwave/list")) {
       const data = e.dataTransfer.getData("taskwave/list");
       const draggedList = document.getElementById(data);
-      draggedList.classList.add("border-[12px]");
+      draggedList.classList.add(e.target.dataset.borderClass);
       const listContainer = document.getElementById("listContainer"); // Assumes every board :show have only one listContainer
       const list =
         e.target.closest('[id*="list-"]') ||
@@ -103,7 +105,7 @@ export default class extends Controller {
 
     const data = e.dataTransfer.getData("taskwave/task");
     const draggedTask = document.getElementById(data);
-    draggedTask.classList.add("border-4");
+    draggedTask.classList.add(e.target.dataset.borderClass);
     const taskContainer = e.target.closest(".taskContainer");
     const task =
       e.target.closest('[id*="task-"]') ||
@@ -127,8 +129,8 @@ export default class extends Controller {
     let tasks = taskContainer.querySelectorAll('[id*="task-"]');
     let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
     const updatePath = draggedTask.dataset.updatePath;
-
-    updateRails(updatePath, tasksIds, "task", taskContainer.id.split("-")[1]);
+    const list = taskContainer.parentElement;
+    updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
   }
 }
 // For external functions

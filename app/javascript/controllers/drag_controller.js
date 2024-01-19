@@ -39,7 +39,7 @@ export default class extends Controller {
       e.target.closest('[id*="task-"]') ||
       list.children[list.children.length - 1];
     list.children[list.children.length - 1].classList.remove("task-over");
-    removeClasses(task, list);
+    removeClasses();
   }
 
   allowDrop(e) {
@@ -73,64 +73,66 @@ export default class extends Controller {
   drop(e) {
     e.preventDefault();
     document.querySelector("#trashButton").classList.remove("trash-able");
+
+    const type = e.dataTransfer.types[0].split("/")[1];
+    const elementId = e.dataTransfer.getData(e.dataTransfer.types[0]);
+    const draggedElement = document.getElementById(elementId);
+    draggedElement.classList.add(draggedElement.dataset.borderClass);
+
+    const containerElement =
+      e.target.closest("." + type + "Container") ||
+      document.querySelector("." + type + "Container"); // Assumes every board :show have only one listContainer
+    console.log(e.target.closest(".taskContainer"), type);
     if (e.dataTransfer.types.includes("taskwave/list")) {
-      const data = e.dataTransfer.getData("taskwave/list");
-      const draggedList = document.getElementById(data);
-      draggedList.classList.add(draggedList.dataset.borderClass);
-      const listContainer = document.getElementById("listContainer"); // Assumes every board :show have only one listContainer
       const list =
         e.target.closest('[id*="list-"]') ||
-        listContainer.children[listContainer.children.length - 1];
+        containerElement.children[containerElement.children.length - 1];
       const nextSibling = list.nextSibling;
 
       let [x, y] = dragOverHalf(list, e.clientX, e.clientY);
 
-      removeClasses(list, list);
+      removeClasses();
       if (x) {
         // Left
-        listContainer.insertBefore(draggedList, list);
+        containerElement.insertBefore(draggedElement, list);
       } else if (nextSibling) {
         // Right
-        listContainer.insertBefore(draggedList, nextSibling);
+        containerElement.insertBefore(draggedElement, nextSibling);
       } else {
-        listContainer.appendChild(draggedList);
+        containerElement.appendChild(draggedElement);
       }
-      let lists = listContainer.querySelectorAll('[id*="list-"]');
+      let lists = containerElement.querySelectorAll('[id*="list-"]');
       let listIds = Array.from(lists, (e) => e.id.split("-")[1]);
 
-      const updatePath = draggedList.dataset.updatePath;
+      const updatePath = draggedElement.dataset.updatePath;
 
       updateRails(updatePath, listIds);
       return;
     }
 
-    const data = e.dataTransfer.getData("taskwave/task");
-    const draggedTask = document.getElementById(data);
-    draggedTask.classList.add(draggedTask.dataset.borderClass);
+    removeClasses();
     const list = e.target.closest('[id*="list-"]');
-    const taskContainer = list.querySelector(".taskContainer");
     const task =
       e.target.closest('[id*="task-"]') ||
-      taskContainer.children[taskContainer.children.length - 1];
+      containerElement.children[containerElement.children.length - 1];
     const noTasks =
-      task === taskContainer.children[taskContainer.children.length - 1];
+      task === containerElement.children[containerElement.children.length - 1];
 
-    removeClasses(task, taskContainer);
     const nextSibling = task.nextSibling;
     let [x, y] = dragOverHalf(task, e.clientX, e.clientY);
     if (y || noTasks) {
       // Over
-      taskContainer.insertBefore(draggedTask, task);
+      containerElement.insertBefore(draggedElement, task);
     } else if (nextSibling) {
       // Under
-      taskContainer.insertBefore(draggedTask, nextSibling);
+      containerElement.insertBefore(draggedElement, nextSibling);
     } else {
-      taskContainer.appendChild(draggedTask);
+      containerElement.appendChild(draggedElement);
     }
 
-    let tasks = taskContainer.querySelectorAll('[id*="task-"]');
+    let tasks = containerElement.querySelectorAll('[id*="task-"]');
     let tasksIds = Array.from(tasks, (e) => e.id.split("-")[1]);
-    const updatePath = draggedTask.dataset.updatePath;
+    const updatePath = draggedElement.dataset.updatePath;
     updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
   }
 }
@@ -159,7 +161,7 @@ function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
   });
 }
 // Removes drag over classes
-function removeClasses(task, list) {
+function removeClasses() {
   // task.classList.remove("task-over", "task-under");
   // list.classList.remove("list-left", "list-right");
   // const taskContainer = list.querySelector(".taskContainer");

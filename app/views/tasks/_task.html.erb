@@ -11,6 +11,8 @@
       <%= form_with model: task, url: board_list_task_path(@board.id, list.id, task.id), html:{hidden:true, "data-action":"submit->editable#submit"} do |form|  %>
         <%= form.hidden_field :list_id, value: list.id %>
         <%= form.text_field :name, class: "p-0",  "data-editable-target":"input", "data-action":"focusout->editable#focusout" %>
+
+      <%= form.submit class: "hidden" %>
       <% end %>
   </div>
 

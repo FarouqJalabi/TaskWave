@@ -31,7 +31,6 @@ export default class extends Controller {
   }
 
   submit(ev) {
-    console.log("HELLO");
     if (this.formSubmitted) {
       ev.preventDefault();
     } else {

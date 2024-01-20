@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-
+// ! Clicking on enter much faster than focus out
 export default class extends Controller {
   static targets = ["name", "input"];
 
@@ -7,6 +7,8 @@ export default class extends Controller {
     // Assume only one input target
     this.formTarget = this.inputTarget.closest("form");
     this.formSubmitted = false;
+    //Trigging this button will not refresh site
+    this.submitButton = this.formTarget.querySelector('input[type="submit"]');
   }
   dblclick(ev) {
     ev.target.hidden = true;
@@ -23,12 +25,13 @@ export default class extends Controller {
     this.formTarget.hidden = true;
     // Assuming input is focusout
     if (!this.formSubmitted) {
-      ev.preventDefault(); // Prevent the default form submission
-      this.formTarget.submit();
+      this.submitButton.click();
       this.formSubmitted = true;
     }
   }
+
   submit(ev) {
+    console.log("HELLO");
     if (this.formSubmitted) {
       ev.preventDefault();
     } else {

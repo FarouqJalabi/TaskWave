@@ -29,7 +29,7 @@ export default class extends Controller {
     e.target.style.display = "none";
   }
   dragend(e) {
-    e.target.style.display = "inherit";
+    e.target.style.display = "block";
     document.querySelector("#trashButton").classList.remove("trash-able");
     e.target.classList.add(e.target.dataset.borderClass);
   }

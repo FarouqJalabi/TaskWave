@@ -17,10 +17,6 @@
   </div>
 
   <div data-controller="editable" class="ml-auto">
-  <%= form_with model: @board, html:{"data-action":"change->editable#focusout"} do |form|  %>
-      <div data-editable-target="input"></div> <!-- ! Bad should get form by target  -->
-      <%= form.select :public, [['Public', true], ['Private', false]] %>
-  <% end %>
   </div>
   <div  data-controller="delete" data-action="drop->delete#deleteTask dragover->delete#allowDrop" id="trashButton">
     <%= link_to image_tag("trash.svg", alt:"Delete board", class: "bg-dark p-2 rounded" ), board_path , data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete board?" },  "data-task-path":board_lists_path(@board.id) %>

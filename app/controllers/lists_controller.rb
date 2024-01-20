@@ -2,9 +2,12 @@ class ListsController < ApplicationController
   before_action :authorize_user!
   before_action :set_list, only: [:update, :destroy]
   def create
+    # finding last place and adding one
+    # So that it lands on last place
     @board = Board.find(params[:board_id])
-    @list = @board.lists.create(list_params)
-    @list.save
+    last_list = @board.lists.order(:place)[-1]
+    @list = @board.lists.create(name:list_params[:name], place: last_list&.place.to_i + 1 )
+
     redirect_to board_path(@board)
   end
   def update

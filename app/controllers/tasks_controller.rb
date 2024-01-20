@@ -2,6 +2,8 @@ class TasksController < ApplicationController
   before_action :authorize_user!
   before_action :set_task, only: [:update, :destroy ]
   def create
+    # Adding one so it lands on last place
+
     # ? Why @ if not sharing with html?
     @board = Board.find(params[:board_id])
     @list = @board.lists.find(params[:list_id]) # ? Faster search using board

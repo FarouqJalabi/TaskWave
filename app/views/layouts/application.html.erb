@@ -2,6 +2,23 @@
 <html>
   <head>
     <title>TaskWave</title>
+    <meta name="description" content="Organize anything. TaskWave is a tool to help you orginizes your projects into boards. In one glance, know what's being worked on, what's done and everything else in your project.">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://taskwave-95876f6bfce4.herokuapp.com">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TaskWave">
+    <meta property="og:description" content="TaskWave is a trello clone made by Farouq Jalabi">
+    <meta property="og:image" content="OG-logo.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="taskwave-95876f6bfce4.herokuapp.com">
+    <meta property="twitter:url" content="https://taskwave-95876f6bfce4.herokuapp.com">
+    <meta name="twitter:title" content="TaskWave">
+    <meta name="twitter:description" content="TaskWave is a trello clone made by Farouq Jalabi">
+    <meta name="twitter:image" content="OG-logo.png">
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -16,6 +33,7 @@
     <nav class="bg-dark w-full p-5 flex items-center ">
       <a href="<%= root_path %>">
       <%= image_tag("Logo.svg", alt:"Logo of task-wave", class: "w-36 md:w-48") %>
+        <img src="Logo-1.png">
       </a>
 
       <div class="text-white ml-auto">

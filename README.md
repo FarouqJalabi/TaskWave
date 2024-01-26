@@ -25,6 +25,6 @@ Visit site: [TaskWave](https://taskwave-95876f6bfce4.herokuapp.com) * PS not fin
 - Soft deletion of boards
 - Board background
 
-![Logo of TaskWave](https://github.com/FarouqJalabi/TaskWave/blob/5ffaedb26d61b153837fe1ba19726212c602eb9c/public/Boards.png?raw=true)
+![Logo of TaskWave](https://raw.githubusercontent.com/FarouqJalabi/TaskWave/main/public/Boards.png)
 
-![Logo of TaskWave](https://github.com/FarouqJalabi/TaskWave/blob/5ffaedb26d61b153837fe1ba19726212c602eb9c/public/Lists.png?raw=true)
+![Logo of TaskWave](https://raw.githubusercontent.com/FarouqJalabi/TaskWave/main/public/Lists.png)

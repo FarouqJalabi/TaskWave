@@ -3,11 +3,12 @@ class BoardsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :new]
   before_action :set_board, only: [:show, :update, :destroy]
   def index
-    # if user_signed_in?
+    if user_signed_in?
       @user_boards = Board.where(creator_id:current_user)
-    # else
-    #
-    # end
+    else
+      redirect_to "/about"
+    end
+
   end
   def show
   end

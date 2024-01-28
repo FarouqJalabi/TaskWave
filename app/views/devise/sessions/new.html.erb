@@ -1,5 +1,10 @@
 <%= form_for(resource, html: {class: "flex flex-col items-center gap-2"}, as: resource_name, url: session_path(resource_name)) do |f| %>
+
   <h1 class="text-2xl font-bold">Log in</h1>
+  <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+  <%- end -%>
+
 
   <div class="field">
     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" , class: "rounded bg-grey border-0" %>

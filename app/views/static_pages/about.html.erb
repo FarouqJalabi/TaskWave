@@ -3,21 +3,9 @@
   The source code is available on github.</p>
 
   <div class="flex gap-5 flex-wrap justify-center items-start">
-    <div class="flex flex-col justify-center items-center text-center gap-1">
-      <h1 class="text-3xl font-bold">Drag anything, anywhere</h1>
-      <%= image_tag("Feature-1.jpg", alt:"Dragging task", class: "w-64 md:w-96 lg:w-auto") %>
-    </div>
-
-  <div class="flex flex-col justify-center items-center text-center gap-1">
-    <h1 class="text-3xl font-bold">Edit by double click!</h1>
-    <%= image_tag("Feature-2.jpg", alt:"Editing title", class: "w-64 md:w-96 lg:w-auto") %>
-  </div>
-
-    <div class="flex flex-col justify-center items-center text-center gap-1">
-      <h1 class="text-3xl font-bold text-center">Unlimited boards!</h1>
-      <%= image_tag("Feature-3.jpg", alt:"Creating board", class: "w-64 md:w-96 lg:w-auto") %>
-    </div>
-
+    <%= render 'feature', name: "Drag anything, anywhere", image_file: "Feature-1.jpg" %>
+    <%= render 'feature', name: "Edit by double click", image_file: "Feature-2.jpg" %>
+    <%= render 'feature', name: "Unlimited boards!", image_file: "Feature-3.jpg" %>
   </div>
 
   <%= link_to 'Create account', new_user_session_path, class: "bg-blue-400 p-4 my-4 rounded text-white font-bold inline-block" %>

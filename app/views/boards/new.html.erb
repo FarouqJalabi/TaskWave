@@ -13,7 +13,7 @@
       <% Board::background_urls.each_with_index do |(k,v),index| %>
           <label for="<%= index %>" class="m-auto block w-80 h-44">
             <%= form.radio_button :background_url, k, checked: index.zero?, class: "peer hidden", id: index %>
-            <%= image_tag k, alt: v, class: "peer-checked:border-8 peer-checked:border-dark peer-checked:grayscale-0 grayscale inline-block h-full w-full object-cover" %>
+            <%= image_tag k, alt: v, class: "peer-checked:border-8 peer-checked:border-dark peer-checked:grayscale-0 grayscale peer-checked:scale-100 scale-[0.8] inline-block h-full w-full object-cover" %>
           </label>
       <% end %>
 

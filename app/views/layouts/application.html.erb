@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="overflow-x-hidden h-full">
   <head>
     <title>TaskWave</title>
     <meta name="description" content="Organize anything. TaskWave is a tool to help you orginizes your projects into boards. In one glance, know what's being worked on, what's done and everything else in your project.">
@@ -29,7 +29,7 @@
 
   </head>
 
-  <body>
+  <body class="h-full flex flex-col">
     <nav class="bg-dark w-full p-5 flex items-center ">
       <a href="<%= root_path %>">
       <%= image_tag("Logo.svg", alt:"Logo of task-wave", class: "w-36 md:w-48") %>
@@ -46,9 +46,6 @@
       </div>
     </nav>
 
-    <main class="overflow-x-hidden">
       <%= yield %>
-    </main>
-
   </body>
 </html>

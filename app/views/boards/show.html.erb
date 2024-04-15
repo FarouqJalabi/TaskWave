@@ -1,4 +1,4 @@
-<section>
+<section class="h-full flex flex-col">
   <!-- Background -->
   <div class="w-screen h-screen fixed z-[-10] left-0 top-0"
        style="background: url('<%= @board.background_url %>'); background-size: cover; background-position:center;"
@@ -22,7 +22,8 @@
     <%= link_to image_tag("trash.svg", alt:"Delete board", class: "bg-dark p-2 rounded" ), board_path , data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete board?" },  "data-task-path":board_lists_path(@board.id) %>
   </div>
   </div>
-  <section class="flex overflow-auto mt-2 px-2 w-screen left-0 absolute listContainer">
+
+  <div class="flex overflow-auto mt-2 px-2 listContainer grow">
     <%= render @board.lists.sort_by(&:place) %>
 
     <div data-controller="editable" class="border-[12px] border-transparent">
@@ -34,6 +35,6 @@
       <% end %>
     </div>
 
-  </section>
+  </div>
 
 </section>

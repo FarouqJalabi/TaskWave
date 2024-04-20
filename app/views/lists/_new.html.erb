@@ -1,0 +1,10 @@
+<div data-controller="editable" class="border-[12px] border-transparent">
+  <button data-action="click->editable#dblclick" data-editable-target="name" class="bg-gray-300 p-2 rounded h-min min-w-fit">New
+    List +
+  </button>
+  <%= form_with model: [@board, @board.lists.build], html: { hidden: true, "data-action": "submit->editable#submit" } do |form| %>
+    <%= form.text_field :name, class: "p-0 font-bold text-xl rounded h-min min-w-fit", "data-editable-target": "input", "data-action": "focusout->editable#focusout" %>
+
+    <%= form.submit class: "hidden" %>
+  <% end %>
+</div>

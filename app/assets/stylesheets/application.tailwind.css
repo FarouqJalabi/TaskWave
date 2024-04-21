@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.list-left,.list-right, .task-over, .task-under {
+.list-left, .list-right, .task-over, .task-under {
     position: relative;
 }
 
@@ -12,7 +12,7 @@
     content: "";
 
     left: 50%;
-    transform: translate(-50%,1.5px);
+    transform: translate(-50%, 1.5px);
     width: 90%;
     height: 5px;
 
@@ -26,7 +26,7 @@
     content: "";
 
     left: 50%;
-    transform: translate(-50%,-6.5px);
+    transform: translate(-50%, -6.5px);
     width: 90%;
     height: 5px;
 
@@ -41,8 +41,8 @@
 
     height: 100%;
     width: 5px;
-    left: 0;
-    top: -2.5px;
+    left: -14.5px;
+    top: 0;
 
     border-radius: 50px;
     position: absolute;
@@ -55,8 +55,8 @@
 
     height: 100%;
     width: 5px;
-    right: 0;
-    top: -2.5px;
+    right: -14.5px;
+    top: 0;
 
     border-radius: 50px;
     position: absolute;
@@ -67,11 +67,13 @@
     border: transparent 4px solid;
     transition: 200ms;
 }
+
 /*Showing if something is able to be trashed */
 .trash-able {
-   border: white 4px solid !important;
+    border: white 4px solid !important;
     transition: 2000ms;
 }
+
 @layer components {
 
 }

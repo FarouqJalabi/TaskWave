@@ -1,25 +1,26 @@
-  <%= form_with html: {class: "flex flex-col gap-2 px-5 mt-4"}, model: @board  do |form| %>
-    <h1 class="text-2xl font-bold">Create board</h1>
-    <div>
-      <%= form.text_field :name, placeholder:"name", class: "rounded bg-grey border-0" %>
+<!-- * Form for new board -->
+<%= form_with html: { class: "flex flex-col gap-2 px-5 mt-4" }, model: @board do |form| %>
+  <h1 class="text-2xl font-bold">Create board</h1>
+  <div>
+    <%= form.text_field :name, placeholder: "name", class: "rounded bg-grey border-0" %>
 
-      <% @board.errors.full_messages_for(:name).each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div>
+    <% @board.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
 
-    <h1 class="text-xl font-bold">Choose background</h1>
-    <div class="grid sm:grid-cols-2 relative gap-2 w-fit">
-      <% Board::background_urls.each_with_index do |(k,v),index| %>
-          <label for="<%= index %>" class="m-auto block w-80 h-44">
-            <%= form.radio_button :background_url, k, checked: index.zero?, class: "peer hidden", id: index %>
-            <%= image_tag k, alt: v, class: "peer-checked:border-8 peer-checked:border-dark peer-checked:grayscale-0 grayscale peer-checked:scale-100 scale-[0.8] inline-block h-full w-full object-cover" %>
-          </label>
-      <% end %>
+  <h1 class="text-xl font-bold">Choose background</h1>
+  <div class="grid sm:grid-cols-2 relative gap-2 w-fit">
+    <% Board::background_urls.each_with_index do |(k, v), index| %>
+      <label for="<%= index %>" class="m-auto block w-80 h-44">
+        <%= form.radio_button :background_url, k, checked: index.zero?, class: "peer hidden", id: index %>
+        <%= image_tag k, alt: v, class: "peer-checked:border-8 peer-checked:border-dark peer-checked:grayscale-0 grayscale peer-checked:scale-100 scale-[0.8] inline-block h-full w-full object-cover" %>
+      </label>
+    <% end %>
 
-    </div>
+  </div>
 
-    <div class="text-white bg-dark px-8 py-2 rounded w-min">
-      <%= form.submit %>
-    </div>
-  <% end %>
+  <div class="text-white bg-dark px-8 py-2 rounded w-min">
+    <%= form.submit %>
+  </div>
+<% end %>

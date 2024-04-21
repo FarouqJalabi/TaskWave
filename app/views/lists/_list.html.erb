@@ -1,3 +1,4 @@
+<!-- * List view within board -->
 <section class="border-[12px] border-transparent h-min" data-controller="drag" id="list-<%= list.id %>"
          draggable="true"
          data-update-path="<%= board_list_path(@board.id, list) %>"
@@ -6,19 +7,21 @@
 
   <div class="bg-gray-300 p-2 rounded flex flex-col min-w-[272px] taskContainer">
 
+    <!-- Editable  list name-->
     <div data-controller="editable">
       <h1 class="font-bold text-xl"
           data-action="dblclick->editable#dblclick"
-          data-editable-target="name"
-      ><%= list.name %></h1>
+          data-editable-target="name">
+        <%= list.name %>
+      </h1>
 
       <%= form_with model: list, url: board_list_path(@board.id, list.id), html: { hidden: true } do |form| %>
         <%= form.text_field :name, class: "p-0 font-bold text-xl", "data-editable-target": "input", "data-action": "focusout->editable#focusout" %>
-
         <%= form.submit class: "hidden" %>
       <% end %>
     </div>
 
+    <!-- List tasks-->
     <%= render list.tasks.sort_by(&:place), list: list %>
     <%= render "tasks/new", list: list %>
 

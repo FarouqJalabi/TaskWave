@@ -1,5 +1,5 @@
 <!-- * List view within board -->
-<section class="border-[12px] border-transparent h-min" data-controller="drag" id="list-<%= list.id %>"
+<section class="border-[12px] border-transparent h-full active:h-min" data-controller="drag" id="list-<%= list.id %>"
          draggable="true"
          data-update-path="<%= board_list_path(@board.id, list) %>"
          data-border-class="border-[12px]"
@@ -26,4 +26,5 @@
     <%= render "tasks/new", list: list %>
 
   </div>
+
 </section>

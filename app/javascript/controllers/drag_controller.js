@@ -12,6 +12,7 @@ export default class extends Controller {
       e.dataTransfer.setData("taskwave/list", e.target.id);
     }
   }
+
   dragover(e) {
     if (!e.dataTransfer.types.includes("taskwave/task")) {
       return;
@@ -25,14 +26,17 @@ export default class extends Controller {
     task.classList.remove("task-" + otherPosition);
     task.classList.add("task-" + position);
   }
+
   drag(e) {
     e.target.style.display = "none";
   }
+
   dragend(e) {
     e.target.style.display = "block";
     document.querySelector("#trashButton").classList.remove("trash-able");
     e.target.classList.add(e.target.dataset.borderClass);
   }
+
   dragleave(e) {
     const list = e.target.closest('[id*="list"]');
     let task =
@@ -50,8 +54,11 @@ export default class extends Controller {
     if (e.dataTransfer.types.includes("taskwave/list")) {
       let [x, y] = dragOverHalf(list, e.clientX, e.clientY);
       let position = x ? "left" : "right";
-      list.classList.remove("list-left", "list-right");
-      list.classList.add("list-" + position);
+      // list.classList.remove("list-left", "list-right");
+      // list.classList.add("list-" + position);
+
+      taskContainer.classList.remove("list-left", "list-right");
+      taskContainer.classList.add("list-" + position);
 
       return;
     }
@@ -79,11 +86,8 @@ export default class extends Controller {
     const draggedElement = document.getElementById(elementId);
     draggedElement.classList.add(draggedElement.dataset.borderClass);
 
-    const containerElement =
-      e.target.closest("." + type + "Container") ||
-      document.querySelector("." + type + "Container"); // Assumes every board :show have only one listContainer
-    console.log(e.target.closest(".taskContainer"), type);
     if (e.dataTransfer.types.includes("taskwave/list")) {
+      const containerElement = document.querySelector("." + type + "Container");
       const list =
         e.target.closest('[id*="list-"]') ||
         containerElement.children[containerElement.children.length - 1];
@@ -111,6 +115,10 @@ export default class extends Controller {
     }
 
     removeClasses();
+
+    const containerElement =
+      e.target.closest("." + type + "Container") || e.target.children[0];
+
     const list = e.target.closest('[id*="list-"]');
     const task =
       e.target.closest('[id*="task-"]') ||
@@ -136,6 +144,7 @@ export default class extends Controller {
     updateRails(updatePath, tasksIds, "task", list.id.split("-")[1]);
   }
 }
+
 // For external functions
 function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
   let formData = new FormData();
@@ -160,6 +169,7 @@ function updateRails(updatePath, elementsOrder, type = "list", parentId = "") {
     }
   });
 }
+
 // Removes drag over classes
 function removeClasses() {
   // task.classList.remove("task-over", "task-under");
@@ -181,6 +191,7 @@ function removeClasses() {
       )
     );
 }
+
 function dragOverHalf(element, clientX, clientY) {
   let rect = element.getBoundingClientRect();
   let relativeX = clientX - rect.left - element.offsetWidth / 2;

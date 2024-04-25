@@ -2,7 +2,8 @@ import { Controller } from "@hotwired/stimulus";
 // !Whole things need to be refactored
 export default class extends Controller {
   dragstart(e) {
-    e.target.classList.remove(e.target.dataset.borderClass);
+    e.target.classList.add("dragged");
+
     document.querySelector("#trashButton").classList.add("trash-able");
     // ? Why task gets dragstart twice? and not list
     if (e.target.id.startsWith("task-")) {
@@ -34,7 +35,7 @@ export default class extends Controller {
   dragend(e) {
     e.target.style.display = "block";
     document.querySelector("#trashButton").classList.remove("trash-able");
-    e.target.classList.add(e.target.dataset.borderClass);
+    e.target.classList.remove("dragged");
   }
 
   dragleave(e) {

@@ -1,11 +1,10 @@
 <!-- * Task view within list -->
 
-<section class="border-4 border-transparent" id="task-<%= task.id %>"
+<section class="border-4 border-transparent [&.dragged]:border-none" id="task-<%= task.id %>"
          draggable="true"
          data-action="dragstart->drag#dragstart dragover->drag#dragover dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag"
          <%# This is part of js not stimulus  %>
          data-update-path="<%= board_list_task_path(@board.id, list.id, task) %>"
-         data-border-class="border-4"
          data-controller="editable">
 
   <!-- Editable task name -->

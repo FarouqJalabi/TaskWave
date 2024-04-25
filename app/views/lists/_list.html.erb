@@ -1,5 +1,5 @@
 <!-- * List view within board -->
-<section class="border-[12px] border-transparent h-full active:h-min [&.dragged]:border-none" data-controller="drag" id="list-<%= list.id %>"
+<section class="border-[12px] border-transparent h-full [&.dragged]:h-min [&.dragged]:border-none" data-controller="drag" id="list-<%= list.id %>"
          draggable="true"
          data-update-path="<%= board_list_path(@board.id, list) %>"
          data-action="dragstart->drag#dragstart drop->drag#drop dragover->drag#allowDrop dragend->drag#dragend dragleave->drag#dragleave drag->drag#drag">

@@ -15,7 +15,7 @@
       </h1>
 
       <%= form_with model: list, url: board_list_path(@board.id, list.id), html: { hidden: true } do |form| %>
-        <%= form.text_field :name, class: "p-0 font-bold text-xl", "data-editable-target": "input", "data-action": "focusout->editable#focusout" %>
+        <%= form.text_field :name, class: "p-0 font-bold text-xl", "data-editable-target": "input", "data-action": "focusout->editable#focusout", autocomplete: :off %>
         <%= form.submit class: "hidden" %>
       <% end %>
     </div>

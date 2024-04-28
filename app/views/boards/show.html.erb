@@ -14,7 +14,7 @@
       ><%= @board.name %></h1>
 
       <%= form_with model: @board, html: { hidden: true, "data-action": "submit->editable#submit" } do |form| %>
-        <%= form.text_field :name, class: "p-0 font-bold text-2xl", "data-editable-target": "input", "data-action": "focusout->editable#focusout" %>
+        <%= form.text_field :name, class: "p-0 font-bold text-2xl", "data-editable-target": "input", "data-action": "focusout->editable#focusout", autocomplete: :off %>
 
         <%= form.submit class: "hidden" %>
       <% end %>

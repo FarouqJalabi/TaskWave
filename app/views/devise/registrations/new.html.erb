@@ -1,23 +1,21 @@
-
-<%= form_for(resource,  html: {class: "flex flex-col items-center gap-2"},as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, html: { class: "flex flex-col items-center gap-2" }, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <h1 class="text-2xl font-bold">Sign up</h1>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"Email" ,class: "rounded bg-grey border-0" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "rounded bg-grey border-0" %>
   </div>
 
   <div class="field">
-    <%= f.password_field :password, autocomplete: "new-password", placeholder:"Password (minimum 6)", class: "rounded bg-grey border-0" %>
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password (minimum 6)", class: "rounded bg-grey border-0" %>
   </div>
 
   <div class="field">
-    <%= f.password_field :password_confirmation, autocomplete: "new-password",placeholder:"Password confirmation",   class: "rounded bg-grey border-0"%>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password confirmation", class: "rounded bg-grey border-0" %>
   </div>
 
-  <div class="actions text-white bg-dark px-8 py-2 rounded" >
-    <%= f.submit "Sign up" %>
-  </div>
+
+  <%= f.submit "Sign up", class: "actions text-white bg-dark px-8 py-2 rounded cursor-pointer" %>
 
   <%= render "devise/shared/links" %>
 <% end %>

@@ -26,7 +26,8 @@
   </div>
 
   <!-- Board lists -->
-  <div class="flex overflow-auto mt-2 px-2 listContainer grow">
+  <div class="flex overflow-auto mt-2 px-2 listContainer grow" data-controller="drag"
+       data-action="drop->drag#drop dragover->drag#allowDrop dragleave->drag#dragleave">
     <%= render @board.lists.sort_by(&:place) %>
     <%= render "lists/new" %>
   </div>

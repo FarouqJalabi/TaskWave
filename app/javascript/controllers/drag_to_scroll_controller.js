@@ -28,9 +28,10 @@ export default class extends Controller {
     };
 
     // Add the event listeners
-    this.element.addEventListener("mousemove", move, false);
-    this.element.addEventListener("mousedown", startDragging, false);
-    this.element.addEventListener("mouseup", stopDragging, false);
-    this.element.addEventListener("mouseleave", stopDragging, false);
+    //   ! Huge bug, doesn't allow drag and drop of tasks or lists
+    // this.element.addEventListener("mousemove", move, false);
+    // this.element.addEventListener("mousedown", startDragging, false);
+    // this.element.addEventListener("mouseup", stopDragging, false);
+    // this.element.addEventListener("mouseleave", stopDragging, false);
   }
 }

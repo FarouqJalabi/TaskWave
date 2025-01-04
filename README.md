@@ -4,8 +4,6 @@ Tasks and lists can be dragged around to be reorder or deleted if dragged to tra
 
 ![Logo of TaskWave](https://github.com/FarouqJalabi/TaskWave/blob/5ffaedb26d61b153837fe1ba19726212c602eb9c/public/Logo.png?raw=true)
 
-Visit site: [TaskWave](https://taskwave-95876f6bfce4.herokuapp.com) * PS not finished product
-
 [Figma file](https://www.figma.com/file/hqOpRf1V8wm1M53AnW27gy/TaskWave?type=design&node-id=0-1&mode=design&t=18Czr5AlmXNK4Qcb-0)
 
 ## Features (in progress)
